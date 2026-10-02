@@ -34,6 +34,21 @@ def upsert_profile(
     On update, only explicitly provided fields are modified.
     """
     profile = get_profile(session, user_id)
+
+    # Validate effective combined profile state
+    eff_savings = (
+        existing_savings_paise
+        if existing_savings_paise is not _UNSET
+        else (profile.existing_savings_paise if profile else None)
+    )
+    eff_reserve = (
+        emergency_reserve_paise
+        if emergency_reserve_paise is not _UNSET
+        else (profile.emergency_reserve_paise if profile else None)
+    )
+    if eff_savings is not None and eff_reserve is not None and eff_reserve > eff_savings:
+        raise ValueError("Emergency reserve cannot exceed existing savings.")
+
     if profile is None:
         profile = UserProfile(
             id=user_id,
@@ -97,7 +112,7 @@ def upsert_active_goal(
     target_amount_paise: int,
     target_date: date,
     requested_allocated_savings_paise: int = 0,
-    permitted_allocated_savings_paise: int = 0,
+    permitted_allocated_savings_paise: Optional[int] = None,
     is_allocation_capped: bool = False,
     user_id: str = DEFAULT_USER_ID,
 ) -> FinancialGoal:

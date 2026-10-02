@@ -113,14 +113,13 @@ class TestEmergencyReserveAllocationCap:
         assert note is not None
 
     def test_deficit_reserve_boundary(self):
-        # Savings ₹3L, Reserve ₹5L -> Unencumbered 0. Requested ₹50k.
-        permitted, is_capped, note = calculate_permitted_allocation(
-            requested_paise=5000000,
-            existing_savings_paise=30000000,
-            emergency_reserve_paise=50000000,
-        )
-        assert permitted == 0
-        assert is_capped is True
+        # Savings ₹3L, Reserve ₹5L -> Reserve exceeds savings, raises ValueError
+        with pytest.raises(ValueError, match="Emergency reserve.*cannot exceed existing savings"):
+            calculate_permitted_allocation(
+                requested_paise=5000000,
+                existing_savings_paise=30000000,
+                emergency_reserve_paise=50000000,
+            )
 
     def test_zero_requested_allocation_with_valid_savings(self):
         # Savings ₹10L, Reserve ₹2L. Requested 0 -> Permitted 0, not capped.

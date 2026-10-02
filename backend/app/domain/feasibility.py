@@ -92,6 +92,8 @@ class ProfileBaseline:
             or self.monthly_estimated_discretionary_paise < 0
         ):
             return False
+        if self.emergency_reserve_paise > self.existing_savings_paise:
+            return False
         return True
 
 
@@ -275,6 +277,13 @@ def calculate_permitted_allocation(
         raise ValueError(f"Existing savings cannot be negative, got {existing_savings_paise}")
     if emergency_reserve_paise is not None and emergency_reserve_paise < 0:
         raise ValueError(f"Emergency reserve cannot be negative, got {emergency_reserve_paise}")
+
+    if existing_savings_paise is not None and emergency_reserve_paise is not None:
+        if emergency_reserve_paise > existing_savings_paise:
+            raise ValueError(
+                f"Emergency reserve ({format_inr(emergency_reserve_paise)}) cannot exceed "
+                f"existing savings ({format_inr(existing_savings_paise)})."
+            )
 
     if requested_paise == 0:
         return 0, False, None

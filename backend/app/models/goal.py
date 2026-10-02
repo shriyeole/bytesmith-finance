@@ -1,8 +1,7 @@
-"""FinancialGoal SQLAlchemy ORM model for ByteSmiths Finance Copilot."""
-
 from datetime import date, datetime, timezone
 import uuid
-from sqlalchemy import Boolean, Date, DateTime, ForeignKey, Index, Integer, String, text
+from typing import Optional
+from sqlalchemy import Boolean, CheckConstraint, Date, DateTime, ForeignKey, Index, Integer, String, text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database import Base
@@ -35,8 +34,8 @@ class FinancialGoal(Base):
     requested_allocated_savings_paise: Mapped[int] = mapped_column(
         Integer, nullable=False, default=0
     )
-    permitted_allocated_savings_paise: Mapped[int] = mapped_column(
-        Integer, nullable=False, default=0
+    permitted_allocated_savings_paise: Mapped[Optional[int]] = mapped_column(
+        Integer, nullable=True, default=None
     )
     is_allocation_capped: Mapped[bool] = mapped_column(
         Boolean, nullable=False, default=False
@@ -63,9 +62,23 @@ class FinancialGoal(Base):
             unique=True,
             sqlite_where=text("status = 'ACTIVE'"),
         ),
+        CheckConstraint("target_amount_paise > 0", name="ck_goal_target_amount_positive"),
+        CheckConstraint(
+            "requested_allocated_savings_paise >= 0",
+            name="ck_goal_requested_allocation_non_negative",
+        ),
+        CheckConstraint(
+            "permitted_allocated_savings_paise IS NULL OR permitted_allocated_savings_paise >= 0",
+            name="ck_goal_permitted_allocation_non_negative",
+        ),
     )
 
     @property
-    def net_funding_gap_paise(self) -> int:
-        """Calculate unallocated balance needed to achieve goal target."""
+    def net_funding_gap_paise(self) -> Optional[int]:
+        """Calculate unallocated balance needed to achieve goal target.
+
+        Returns None if permitted allocated savings is unverified/unknown.
+        """
+        if self.permitted_allocated_savings_paise is None:
+            return None
         return max(0, self.target_amount_paise - self.permitted_allocated_savings_paise)

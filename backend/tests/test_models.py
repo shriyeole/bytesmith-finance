@@ -176,8 +176,19 @@ class TestUserProfilePersistence:
         )
         assert profile.is_complete is False
 
-    def test_unencumbered_savings_floor_at_zero(self, db_session: Session):
-        # When existing savings are less than emergency reserve
+    def test_unencumbered_savings_floor_at_zero_boundary(self, db_session: Session):
+        # Equality boundary: existing savings equal emergency reserve -> unencumbered is exactly 0
+        profile = UserProfile(
+            id=DEFAULT_USER_ID,
+            monthly_take_home_income_paise=10000000,
+            existing_savings_paise=20000000,
+            emergency_reserve_paise=20000000,  # reserve == savings
+            monthly_fixed_commitments_paise=3000000,
+        )
+        assert profile.unencumbered_savings_paise == 0
+
+    def test_reserve_exceeding_savings_rejected_by_db_constraint(self, db_session: Session):
+        # Invariant: emergency_reserve_paise <= existing_savings_paise enforced by DB CheckConstraint
         profile = UserProfile(
             id=DEFAULT_USER_ID,
             monthly_take_home_income_paise=10000000,
@@ -185,7 +196,10 @@ class TestUserProfilePersistence:
             emergency_reserve_paise=30000000,  # reserve > savings
             monthly_fixed_commitments_paise=3000000,
         )
-        assert profile.unencumbered_savings_paise == 0
+        db_session.add(profile)
+        with pytest.raises(IntegrityError):
+            db_session.commit()
+        db_session.rollback()
 
     def test_unencumbered_savings_with_none_savings(self, db_session: Session):
         profile = UserProfile(
@@ -276,6 +290,37 @@ class TestUserProfilePersistence:
         p = get_profile(db_session, DEFAULT_USER_ID)
         assert p.monthly_estimated_living_expenses_paise == 0
         assert p.monthly_estimated_discretionary_paise == 0
+
+    def test_upsert_profile_rejects_reserve_greater_than_savings(self, db_session: Session):
+        # 1. Direct creation with reserve > savings raises ValueError
+        with pytest.raises(ValueError, match="Emergency reserve cannot exceed existing savings"):
+            upsert_profile(
+                session=db_session,
+                existing_savings_paise=10000000,
+                emergency_reserve_paise=20000000,
+            )
+
+        # 2. Setup valid profile: savings 5L, reserve 2L
+        upsert_profile(
+            session=db_session,
+            existing_savings_paise=50000000,
+            emergency_reserve_paise=20000000,
+        )
+        db_session.commit()
+
+        # 3. Partial update increasing reserve above savings raises ValueError
+        with pytest.raises(ValueError, match="Emergency reserve cannot exceed existing savings"):
+            upsert_profile(
+                session=db_session,
+                emergency_reserve_paise=60000000,
+            )
+
+        # 4. Partial update lowering savings below reserve raises ValueError
+        with pytest.raises(ValueError, match="Emergency reserve cannot exceed existing savings"):
+            upsert_profile(
+                session=db_session,
+                existing_savings_paise=10000000,
+            )
 
 
 

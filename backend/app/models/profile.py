@@ -2,7 +2,7 @@
 
 from datetime import datetime, timezone
 from typing import TYPE_CHECKING, List, Optional
-from sqlalchemy import DateTime, Integer, String
+from sqlalchemy import CheckConstraint, DateTime, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database import Base
@@ -60,6 +60,38 @@ class UserProfile(Base):
         back_populates="user", cascade="all, delete-orphan"
     )
 
+    __table_args__ = (
+        CheckConstraint(
+            "(emergency_reserve_paise IS NULL OR existing_savings_paise IS NULL) "
+            "OR (emergency_reserve_paise <= existing_savings_paise)",
+            name="ck_emergency_reserve_le_savings",
+        ),
+        CheckConstraint(
+            "monthly_take_home_income_paise IS NULL OR monthly_take_home_income_paise >= 0",
+            name="ck_income_non_negative",
+        ),
+        CheckConstraint(
+            "existing_savings_paise IS NULL OR existing_savings_paise >= 0",
+            name="ck_savings_non_negative",
+        ),
+        CheckConstraint(
+            "emergency_reserve_paise IS NULL OR emergency_reserve_paise >= 0",
+            name="ck_reserve_non_negative",
+        ),
+        CheckConstraint(
+            "monthly_fixed_commitments_paise IS NULL OR monthly_fixed_commitments_paise >= 0",
+            name="ck_fixed_non_negative",
+        ),
+        CheckConstraint(
+            "monthly_estimated_living_expenses_paise IS NULL OR monthly_estimated_living_expenses_paise >= 0",
+            name="ck_living_non_negative",
+        ),
+        CheckConstraint(
+            "monthly_estimated_discretionary_paise IS NULL OR monthly_estimated_discretionary_paise >= 0",
+            name="ck_disc_non_negative",
+        ),
+    )
+
     @property
     def unencumbered_savings_paise(self) -> int:
         """Calculate liquid savings strictly above protected emergency reserve.
@@ -102,5 +134,7 @@ class UserProfile(Base):
             self.monthly_estimated_discretionary_paise is None
             or self.monthly_estimated_discretionary_paise < 0
         ):
+            return False
+        if self.emergency_reserve_paise > self.existing_savings_paise:
             return False
         return True
