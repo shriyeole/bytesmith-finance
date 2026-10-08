@@ -5,6 +5,8 @@ from typing import Optional
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.orm import Session
 
+from app.core.auth import get_current_user
+from app.core.models import User
 from app.database import get_db
 from app.domain.feasibility import (
     InvalidTimelineError,
@@ -20,9 +22,12 @@ router = APIRouter(prefix="/goal", tags=["Goal"])
 
 
 @router.get("", response_model=GoalResponse)
-def get_current_goal(db: Session = Depends(get_db)) -> GoalResponse:
+def get_current_goal(
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+) -> GoalResponse:
     """Retrieve the currently active financial goal for the default user."""
-    goal = get_active_goal(db)
+    goal = get_active_goal(db, user.id)
     if goal is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -35,17 +40,18 @@ def get_current_goal(db: Session = Depends(get_db)) -> GoalResponse:
 def update_current_goal(
     payload: GoalUpdateRequest,
     db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
 ) -> GoalResponse:
     """Create or update the single active financial goal.
 
     Requires an existing financial profile.
     Rejects past deadlines and invalid monetary inputs.
     """
-    profile = get_profile(db)
+    profile = get_profile(db, user.id)
     if profile is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Financial profile not found. Please create a profile via PUT /profile first.",
+            detail="Financial profile not found. Please create a profile via PUT /api/v1/profile first.",
         )
 
     # Validate that target date is not in the past
@@ -72,6 +78,7 @@ def update_current_goal(
         requested_allocated_savings_paise=req_paise,
         permitted_allocated_savings_paise=permitted_paise,
         is_allocation_capped=is_capped,
+        user_id=user.id,
     )
     db.commit()
     db.refresh(goal)
@@ -85,24 +92,25 @@ def get_goal_feasibility(
         description="Optional reference date for evaluation (defaults to today).",
     ),
     db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
 ) -> GoalFeasibilityResponse:
     """Evaluate deterministic feasibility of the active goal against the saved profile.
 
     Translates domain timeline errors to HTTP 422 and missing entities to HTTP 404.
     Incomplete profile baseline inputs return INSUFFICIENT_DATA with null metrics.
     """
-    profile = get_profile(db)
+    profile = get_profile(db, user.id)
     if profile is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Financial profile not configured. Please complete PUT /profile first.",
+            detail="Financial profile not configured. Please complete PUT /api/v1/profile first.",
         )
 
-    goal = get_active_goal(db)
+    goal = get_active_goal(db, user.id)
     if goal is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="No active financial goal found. Please create one via PUT /goal.",
+            detail="No active financial goal found. Please create one via PUT /api/v1/goal.",
         )
 
     ref_date = current_date or date.today()

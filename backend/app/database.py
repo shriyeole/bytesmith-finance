@@ -1,11 +1,11 @@
-import os
 import sqlite3
 from typing import Generator, Optional
+
 from sqlalchemy import create_engine, event
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
 
-DEFAULT_DATABASE_URL = "sqlite:///./finance.db"
+from app.core.config import get_settings
 
 
 class Base(DeclarativeBase):
@@ -23,17 +23,16 @@ def _set_sqlite_pragma(dbapi_connection, connection_record):
 
 
 def get_database_url() -> str:
-    """Retrieve database URL from environment or return default SQLite URL."""
-    return os.getenv("DATABASE_URL", DEFAULT_DATABASE_URL)
+    """Database URL from settings (DATABASE_URL env var), SQLite by default."""
+    return get_settings().database_url
 
 
 def build_engine(database_url: Optional[str] = None):
-    """Build a SQLAlchemy Engine configured for SQLite thread safety."""
+    """Build a SQLAlchemy Engine; SQLite gets thread-safety args, Postgres gets pool pre-ping."""
     url = database_url or get_database_url()
-    connect_args = {}
     if url.startswith("sqlite"):
-        connect_args["check_same_thread"] = False
-    return create_engine(url, connect_args=connect_args)
+        return create_engine(url, connect_args={"check_same_thread": False})
+    return create_engine(url, pool_pre_ping=True, pool_size=5, max_overflow=5)
 
 
 engine = build_engine()

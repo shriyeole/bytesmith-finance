@@ -1,0 +1,82 @@
+name: Deploy to staging
+
+# Requires the one-time setup in docs/DEPLOYMENT.md. Repository variables used:
+#   GCP_PROJECT_ID, GCP_WIF_PROVIDER, GCP_DEPLOY_SA, CLOUD_SQL_INSTANCE,
+#   FIREBASE_API_KEY, FIREBASE_AUTH_DOMAIN (frontend build)
+on:
+  workflow_run:
+    workflows: [CI]
+    branches: [main]
+    types: [completed]
+  workflow_dispatch:
+
+env:
+  REGION: asia-south1
+  SERVICE: finance-api
+  REPO: finance
+
+jobs:
+  deploy:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    environment: staging
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ vars.GCP_WIF_PROVIDER }}
+          service_account: ${{ vars.GCP_DEPLOY_SA }}
+
+      - uses: google-github-actions/setup-gcloud@v2
+
+      - name: Build and push API image
+        run: |
+          IMAGE="${REGION}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${REPO}/${SERVICE}:${GITHUB_SHA}"
+          gcloud auth configure-docker "${REGION}-docker.pkg.dev" --quiet
+          docker build -t "$IMAGE" backend
+          docker push "$IMAGE"
+          echo "IMAGE=$IMAGE" >> "$GITHUB_ENV"
+
+      - name: Run database migrations (Cloud Run Job)
+        run: |
+          gcloud run jobs deploy finance-migrate \
+            --image "$IMAGE" --region "$REGION" \
+            --command alembic --args upgrade,head \
+            --set-cloudsql-instances "${{ vars.CLOUD_SQL_INSTANCE }}" \
+            --service-account "finance-api@${{ vars.GCP_PROJECT_ID }}.iam.gserviceaccount.com" \
+            --set-env-vars ENVIRONMENT=staging,AUTH_MODE=firebase,AUTO_CREATE_TABLES=false \
+            --set-secrets DATABASE_URL=database-url:latest \
+            --execute-now --wait
+
+      - name: Deploy API to Cloud Run
+        run: |
+          gcloud run deploy "$SERVICE" \
+            --image "$IMAGE" --region "$REGION" \
+            --service-account "finance-api@${{ vars.GCP_PROJECT_ID }}.iam.gserviceaccount.com" \
+            --set-cloudsql-instances "${{ vars.CLOUD_SQL_INSTANCE }}" \
+            --set-env-vars ENVIRONMENT=staging,AUTH_MODE=firebase,AUTO_CREATE_TABLES=false,FIREBASE_PROJECT_ID=${{ vars.GCP_PROJECT_ID }} \
+            --set-secrets DATABASE_URL=database-url:latest \
+            --min-instances 0 --max-instances 3 \
+            --allow-unauthenticated
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Build frontend
+        working-directory: frontend
+        env:
+          VITE_AUTH_MODE: firebase
+          VITE_FIREBASE_API_KEY: ${{ vars.FIREBASE_API_KEY }}
+          VITE_FIREBASE_AUTH_DOMAIN: ${{ vars.FIREBASE_AUTH_DOMAIN }}
+          VITE_FIREBASE_PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
+        run: npm ci && npm run build
+
+      - name: Deploy to Firebase Hosting
+        run: npx --yes firebase-tools@13 deploy --only hosting --project "${{ vars.GCP_PROJECT_ID }}" --non-interactive

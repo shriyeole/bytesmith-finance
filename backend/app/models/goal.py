@@ -1,7 +1,7 @@
 from datetime import date, datetime, timezone
 import uuid
 from typing import Optional
-from sqlalchemy import Boolean, CheckConstraint, Date, DateTime, ForeignKey, Index, Integer, String, text
+from sqlalchemy import BigInteger, Boolean, CheckConstraint, Date, DateTime, ForeignKey, Index, String, text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database import Base
@@ -17,25 +17,25 @@ class FinancialGoal(Base):
     __tablename__ = "financial_goals"
 
     id: Mapped[str] = mapped_column(
-        String(64), primary_key=True, default=lambda: f"goal_{uuid.uuid4().hex[:12]}"
+        String(128), primary_key=True, default=lambda: f"goal_{uuid.uuid4().hex[:12]}"
     )
     user_id: Mapped[str] = mapped_column(
-        String(64), ForeignKey("user_profiles.id"), nullable=False, index=True
+        String(128), ForeignKey("user_profiles.id", ondelete="CASCADE"), nullable=False, index=True
     )
     title: Mapped[str] = mapped_column(
         String(255), nullable=False
     )
     target_amount_paise: Mapped[int] = mapped_column(
-        Integer, nullable=False
+        BigInteger, nullable=False
     )
     target_date: Mapped[date] = mapped_column(
         Date, nullable=False
     )
     requested_allocated_savings_paise: Mapped[int] = mapped_column(
-        Integer, nullable=False, default=0
+        BigInteger, nullable=False, default=0
     )
     permitted_allocated_savings_paise: Mapped[Optional[int]] = mapped_column(
-        Integer, nullable=True, default=None
+        BigInteger, nullable=True, default=None
     )
     is_allocation_capped: Mapped[bool] = mapped_column(
         Boolean, nullable=False, default=False
@@ -61,6 +61,7 @@ class FinancialGoal(Base):
             "user_id",
             unique=True,
             sqlite_where=text("status = 'ACTIVE'"),
+            postgresql_where=text("status = 'ACTIVE'"),
         ),
         CheckConstraint("target_amount_paise > 0", name="ck_goal_target_amount_positive"),
         CheckConstraint(

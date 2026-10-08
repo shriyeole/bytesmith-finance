@@ -2,7 +2,7 @@
 
 from datetime import datetime, timezone
 from typing import TYPE_CHECKING, List, Optional
-from sqlalchemy import CheckConstraint, DateTime, Integer, String
+from sqlalchemy import BigInteger, CheckConstraint, DateTime, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database import Base
@@ -23,26 +23,26 @@ class UserProfile(Base):
     __tablename__ = "user_profiles"
 
     id: Mapped[str] = mapped_column(
-        String(64), primary_key=True, default=DEFAULT_USER_ID
+        String(128), primary_key=True, default=DEFAULT_USER_ID
     )
     # All financial profile fields are nullable until entered by the user
     monthly_take_home_income_paise: Mapped[Optional[int]] = mapped_column(
-        Integer, nullable=True, default=None
+        BigInteger, nullable=True, default=None
     )
     existing_savings_paise: Mapped[Optional[int]] = mapped_column(
-        Integer, nullable=True, default=None
+        BigInteger, nullable=True, default=None
     )
     emergency_reserve_paise: Mapped[Optional[int]] = mapped_column(
-        Integer, nullable=True, default=None
+        BigInteger, nullable=True, default=None
     )
     monthly_fixed_commitments_paise: Mapped[Optional[int]] = mapped_column(
-        Integer, nullable=True, default=None
+        BigInteger, nullable=True, default=None
     )
     monthly_estimated_living_expenses_paise: Mapped[Optional[int]] = mapped_column(
-        Integer, nullable=True, default=None
+        BigInteger, nullable=True, default=None
     )
     monthly_estimated_discretionary_paise: Mapped[Optional[int]] = mapped_column(
-        Integer, nullable=True, default=None
+        BigInteger, nullable=True, default=None
     )
     currency: Mapped[str] = mapped_column(
         String(3), nullable=False, default="INR"

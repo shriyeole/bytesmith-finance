@@ -3,18 +3,23 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
+from app.core.auth import get_current_user
+from app.core.models import User
 from app.database import get_db
 from app.domain.feasibility import calculate_permitted_allocation
 from app.models.repository import _UNSET, get_active_goal, get_profile, upsert_profile
 from app.schemas.profile import ProfileResponse, ProfileUpdateRequest
 
-router = APIRouter(prefix="/profile", tags=["Profile"])
+router = APIRouter(prefix="/profile", tags=["Profile (legacy baseline)"])
 
 
 @router.get("", response_model=ProfileResponse)
-def get_user_profile(db: Session = Depends(get_db)) -> ProfileResponse:
+def get_user_profile(
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+) -> ProfileResponse:
     """Retrieve the financial profile for the default user."""
-    profile = get_profile(db)
+    profile = get_profile(db, user.id)
     if profile is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -27,6 +32,7 @@ def get_user_profile(db: Session = Depends(get_db)) -> ProfileResponse:
 def update_user_profile(
     payload: ProfileUpdateRequest,
     db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
 ) -> ProfileResponse:
     """Create or partially update the financial profile.
 
@@ -34,7 +40,7 @@ def update_user_profile(
     Enforces emergency_reserve <= existing_savings on the effective combined profile.
     Synchronizes active goal allocation without falsely clearing capping status if data becomes unknown.
     """
-    existing_profile = get_profile(db)
+    existing_profile = get_profile(db, user.id)
     updates = payload.extract_paise_updates()
 
     # Validate effective combined profile state using persisted values for omitted fields
@@ -58,10 +64,10 @@ def update_user_profile(
             detail="Emergency reserve cannot exceed existing savings.",
         )
 
-    profile = upsert_profile(session=db, **updates)
+    profile = upsert_profile(session=db, user_id=user.id, **updates)
 
     # If an active goal exists, synchronize its permitted allocation and capping flag
-    active_goal = get_active_goal(db)
+    active_goal = get_active_goal(db, user.id)
     if active_goal is not None:
         permitted, is_capped, _ = calculate_permitted_allocation(
             requested_paise=active_goal.requested_allocated_savings_paise,

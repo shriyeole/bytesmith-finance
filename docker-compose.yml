@@ -1,0 +1,32 @@
+# Local development with Postgres (mirrors Cloud SQL). Usage:
+#   docker compose up --build        -> API on http://localhost:8080, Postgres on :5432
+# The frontend still runs with `npm run dev` (Vite proxies /api to :8080).
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: finance
+      POSTGRES_PASSWORD: finance
+      POSTGRES_DB: finance
+    ports: ["5432:5432"]
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U finance"]
+      interval: 3s
+      retries: 20
+
+  api:
+    build: ./backend
+    environment:
+      ENVIRONMENT: development
+      DATABASE_URL: postgresql+psycopg://finance:finance@db:5432/finance
+      AUTO_CREATE_TABLES: "false"
+      AUTH_MODE: dev
+    command: sh -c "alembic upgrade head && exec uvicorn app.main:app --host 0.0.0.0 --port 8080 --reload"
+    volumes: ["./backend/app:/app/app", "./backend/migrations:/app/migrations"]
+    ports: ["8080:8080"]
+    depends_on:
+      db: { condition: service_healthy }
+
+volumes:
+  pgdata:

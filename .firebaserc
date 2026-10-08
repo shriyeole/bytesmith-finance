@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "default": "finance-tracker-a4751",
+    "staging": "finance-tracker-a4751"
+  }
+}
