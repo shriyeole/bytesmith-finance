@@ -2090,6 +2090,2046 @@
         }
       }
     },
+    "/api/v1/features": {
+      "get": {
+        "tags": [
+          "Planning"
+        ],
+        "summary": "Features",
+        "operationId": "features_api_v1_features_get",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/assumptions": {
+      "get": {
+        "tags": [
+          "Assumptions"
+        ],
+        "summary": "Get Assumptions",
+        "operationId": "get_assumptions_api_v1_assumptions_get",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssumptionsView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Assumptions"
+        ],
+        "summary": "Put Assumptions",
+        "description": "Partial update of overrides. A null value goes back to the default.",
+        "operationId": "put_assumptions_api_v1_assumptions_put",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": {
+                  "anyOf": [
+                    {},
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "title": "Changes"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssumptionsView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Assumptions"
+        ],
+        "summary": "Reset Assumptions",
+        "operationId": "reset_assumptions_api_v1_assumptions_delete",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssumptionsView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/goals": {
+      "get": {
+        "tags": [
+          "Goals"
+        ],
+        "summary": "List Goals",
+        "operationId": "list_goals_api_v1_goals_get",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GoalRead"
+                  },
+                  "title": "Response List Goals Api V1 Goals Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Goals"
+        ],
+        "summary": "Create Goal",
+        "operationId": "create_goal_api_v1_goals_post",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GoalCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GoalRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/goals/preview": {
+      "post": {
+        "tags": [
+          "Goals"
+        ],
+        "summary": "Preview Goal",
+        "description": "Evaluate a goal that is not saved yet (live preview in the goal editor).",
+        "operationId": "preview_goal_api_v1_goals_preview_post",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GoalCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GoalEvaluation"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/goals/{goal_id}": {
+      "get": {
+        "tags": [
+          "Goals"
+        ],
+        "summary": "Get Goal",
+        "operationId": "get_goal_api_v1_goals__goal_id__get",
+        "parameters": [
+          {
+            "name": "goal_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Goal Id"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GoalRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Goals"
+        ],
+        "summary": "Update Goal",
+        "operationId": "update_goal_api_v1_goals__goal_id__patch",
+        "parameters": [
+          {
+            "name": "goal_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Goal Id"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GoalUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GoalRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Goals"
+        ],
+        "summary": "Delete Goal",
+        "operationId": "delete_goal_api_v1_goals__goal_id__delete",
+        "parameters": [
+          {
+            "name": "goal_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Goal Id"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/plan/goals": {
+      "get": {
+        "tags": [
+          "Goals"
+        ],
+        "summary": "Goals Plan",
+        "operationId": "goals_plan_api_v1_plan_goals_get",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GoalsPlan"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/goals/{goal_id}/evaluation": {
+      "get": {
+        "tags": [
+          "Goals"
+        ],
+        "summary": "Goal Evaluation",
+        "operationId": "goal_evaluation_api_v1_goals__goal_id__evaluation_get",
+        "parameters": [
+          {
+            "name": "goal_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Goal Id"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GoalEvaluation"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/goals/{goal_id}/what-if": {
+      "post": {
+        "tags": [
+          "Goals"
+        ],
+        "summary": "Goal What If",
+        "description": "Re-evaluate one goal with temporary changes. Nothing is saved.",
+        "operationId": "goal_what_if_api_v1_goals__goal_id__what_if_post",
+        "parameters": [
+          {
+            "name": "goal_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Goal Id"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GoalWhatIf"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GoalEvaluation"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/plan/emergency-fund": {
+      "get": {
+        "tags": [
+          "Safety"
+        ],
+        "summary": "Get Emergency Fund",
+        "operationId": "get_emergency_fund_api_v1_plan_emergency_fund_get",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmergencyFund"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/plan/debts": {
+      "get": {
+        "tags": [
+          "Safety"
+        ],
+        "summary": "Get Debts",
+        "operationId": "get_debts_api_v1_plan_debts_get",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DebtOverview"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/plan/debts/{liability_id}/prepay": {
+      "post": {
+        "tags": [
+          "Safety"
+        ],
+        "summary": "Prepay",
+        "operationId": "prepay_api_v1_plan_debts__liability_id__prepay_post",
+        "parameters": [
+          {
+            "name": "liability_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Liability Id"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PrepayRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PrepayScenario"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/plan/protection": {
+      "get": {
+        "tags": [
+          "Safety"
+        ],
+        "summary": "Get Protection",
+        "operationId": "get_protection_api_v1_plan_protection_get",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Protection"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/plan/overview": {
+      "get": {
+        "tags": [
+          "Planning"
+        ],
+        "summary": "Plan Overview",
+        "operationId": "plan_overview_api_v1_plan_overview_get",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlanOverview"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/plan/budget": {
+      "get": {
+        "tags": [
+          "Budget"
+        ],
+        "summary": "Get Budget",
+        "operationId": "get_budget_api_v1_plan_budget_get",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetComparison"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Budget"
+        ],
+        "summary": "Choose Budget",
+        "operationId": "choose_budget_api_v1_plan_budget_put",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BudgetChoice"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetComparison"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/plan/risk-questions": {
+      "get": {
+        "tags": [
+          "Allocation"
+        ],
+        "summary": "Risk Questions",
+        "operationId": "risk_questions_api_v1_plan_risk_questions_get",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RiskQuestion"
+                  },
+                  "title": "Response Risk Questions Api V1 Plan Risk Questions Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/plan/risk-answers": {
+      "put": {
+        "tags": [
+          "Allocation"
+        ],
+        "summary": "Put Risk Answers",
+        "operationId": "put_risk_answers_api_v1_plan_risk_answers_put",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "title": "Answers"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AllocationView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/plan/allocation": {
+      "get": {
+        "tags": [
+          "Allocation"
+        ],
+        "summary": "Get Allocation",
+        "operationId": "get_allocation_api_v1_plan_allocation_get",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AllocationView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/plan/versions": {
+      "post": {
+        "tags": [
+          "Plan versions"
+        ],
+        "summary": "Publish Version",
+        "operationId": "publish_version_api_v1_plan_versions_post",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VersionCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VersionSummary"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Plan versions"
+        ],
+        "summary": "List Versions",
+        "operationId": "list_versions_api_v1_plan_versions_get",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/VersionSummary"
+                  },
+                  "title": "Response List Versions Api V1 Plan Versions Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/plan/versions/{version_id}": {
+      "get": {
+        "tags": [
+          "Plan versions"
+        ],
+        "summary": "Get Version",
+        "operationId": "get_version_api_v1_plan_versions__version_id__get",
+        "parameters": [
+          {
+            "name": "version_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Version Id"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VersionDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/plan/versions/{version_id}/verify": {
+      "get": {
+        "tags": [
+          "Plan versions"
+        ],
+        "summary": "Verify Version",
+        "description": "Recompute a saved version from its stored inputs and compare with its stored outputs.",
+        "operationId": "verify_version_api_v1_plan_versions__version_id__verify_get",
+        "parameters": [
+          {
+            "name": "version_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Version Id"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VerifyResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/plan/changes": {
+      "get": {
+        "tags": [
+          "Plan versions"
+        ],
+        "summary": "Plan Changes",
+        "description": "What changed between two versions. Defaults: from = latest version, to = your current data.",
+        "operationId": "plan_changes_api_v1_plan_changes_get",
+        "parameters": [
+          {
+            "name": "from_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "From Id"
+            }
+          },
+          {
+            "name": "to_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "To Id"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlanDiff"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/plan/journey": {
+      "get": {
+        "tags": [
+          "Wealth journey"
+        ],
+        "summary": "Get Journey",
+        "operationId": "get_journey_api_v1_plan_journey_get",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JourneySet"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/plan/simulate": {
+      "post": {
+        "tags": [
+          "Wealth journey"
+        ],
+        "summary": "Run What If",
+        "description": "Run a what-if on top of a scenario and compare it with the same scenario without it.",
+        "operationId": "run_what_if_api_v1_plan_simulate_post",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SimulateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WhatIfComparison"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/plan/health": {
+      "get": {
+        "tags": [
+          "Dashboard"
+        ],
+        "summary": "Get Health",
+        "operationId": "get_health_api_v1_plan_health_get",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthScore"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/alerts": {
+      "get": {
+        "tags": [
+          "Alerts"
+        ],
+        "summary": "List Alerts",
+        "description": "Re-checks every rule against your current data, then lists alerts (most important first).",
+        "operationId": "list_alerts_api_v1_alerts_get",
+        "parameters": [
+          {
+            "name": "include_hidden",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Include Hidden"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AlertList"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/alerts/{alert_id}/dismiss": {
+      "post": {
+        "tags": [
+          "Alerts"
+        ],
+        "summary": "Dismiss Alert",
+        "operationId": "dismiss_alert_api_v1_alerts__alert_id__dismiss_post",
+        "parameters": [
+          {
+            "name": "alert_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Alert Id"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AlertRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/alerts/{alert_id}/snooze": {
+      "post": {
+        "tags": [
+          "Alerts"
+        ],
+        "summary": "Snooze Alert",
+        "operationId": "snooze_alert_api_v1_alerts__alert_id__snooze_post",
+        "parameters": [
+          {
+            "name": "alert_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Alert Id"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SnoozeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AlertRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/alerts/{alert_id}/done": {
+      "post": {
+        "tags": [
+          "Alerts"
+        ],
+        "summary": "Act On Alert",
+        "description": "Record that the user acted on it (spec \u00a73.2: log accepted actions).",
+        "operationId": "act_on_alert_api_v1_alerts__alert_id__done_post",
+        "parameters": [
+          {
+            "name": "alert_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Alert Id"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AlertRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/plan/actions": {
+      "get": {
+        "tags": [
+          "Alerts"
+        ],
+        "summary": "Top Actions",
+        "description": "The highest-impact things to do now: open alerts that carry an action, ranked.",
+        "operationId": "top_actions_api_v1_plan_actions_get",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 3,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AlertRead"
+                  },
+                  "title": "Response Top Actions Api V1 Plan Actions Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/profile": {
       "get": {
         "tags": [
@@ -2412,6 +4452,175 @@
   },
   "components": {
     "schemas": {
+      "AlertList": {
+        "properties": {
+          "alerts": {
+            "items": {
+              "$ref": "#/components/schemas/AlertRead"
+            },
+            "type": "array",
+            "title": "Alerts"
+          },
+          "counts": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Counts"
+          }
+        },
+        "type": "object",
+        "required": [
+          "alerts",
+          "counts"
+        ],
+        "title": "AlertList"
+      },
+      "AlertRead": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "rule_id": {
+            "type": "string",
+            "title": "Rule Id"
+          },
+          "family": {
+            "type": "string",
+            "title": "Family"
+          },
+          "severity": {
+            "type": "string",
+            "title": "Severity"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "action_label": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Action Label"
+          },
+          "action_link": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Action Link"
+          },
+          "impact_paise": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Impact Paise"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "snoozed_until": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Snoozed Until"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "rule_id",
+          "family",
+          "severity",
+          "title",
+          "message",
+          "status",
+          "created_at"
+        ],
+        "title": "AlertRead"
+      },
+      "AllocationView": {
+        "properties": {
+          "risk": {
+            "$ref": "#/components/schemas/RiskProfile"
+          },
+          "goals": {
+            "items": {
+              "$ref": "#/components/schemas/app__modules__planning__allocation__GoalAllocation"
+            },
+            "type": "array",
+            "title": "Goals"
+          },
+          "current_mix": {
+            "items": {
+              "$ref": "#/components/schemas/MixCompare"
+            },
+            "type": "array",
+            "title": "Current Mix"
+          },
+          "invested_paise": {
+            "type": "integer",
+            "title": "Invested Paise"
+          },
+          "excluded_paise": {
+            "type": "integer",
+            "title": "Excluded Paise"
+          },
+          "disclaimer": {
+            "type": "string",
+            "title": "Disclaimer"
+          },
+          "method": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Method"
+          }
+        },
+        "type": "object",
+        "required": [
+          "risk",
+          "goals",
+          "current_mix",
+          "invested_paise",
+          "excluded_paise",
+          "disclaimer",
+          "method"
+        ],
+        "title": "AllocationView"
+      },
       "AssetCreate": {
         "properties": {
           "name": {
@@ -2666,6 +4875,286 @@
         "type": "object",
         "title": "AssetUpdate"
       },
+      "AssumptionsView": {
+        "properties": {
+          "effective": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Effective"
+          },
+          "defaults": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Defaults"
+          },
+          "overrides": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Overrides"
+          },
+          "hash": {
+            "type": "string",
+            "title": "Hash"
+          }
+        },
+        "type": "object",
+        "required": [
+          "effective",
+          "defaults",
+          "overrides",
+          "hash"
+        ],
+        "title": "AssumptionsView"
+      },
+      "BudgetChoice": {
+        "properties": {
+          "rule": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rule"
+          },
+          "custom_savings_bps": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 9000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Custom Savings Bps"
+          },
+          "custom_wants_bps": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 9000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Custom Wants Bps"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "BudgetChoice"
+      },
+      "BudgetComparison": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "income_paise": {
+            "type": "integer",
+            "title": "Income Paise"
+          },
+          "current": {
+            "$ref": "#/components/schemas/Split"
+          },
+          "goals_need_paise": {
+            "type": "integer",
+            "title": "Goals Need Paise"
+          },
+          "safety_need_paise": {
+            "type": "integer",
+            "title": "Safety Need Paise"
+          },
+          "total_need_paise": {
+            "type": "integer",
+            "title": "Total Need Paise"
+          },
+          "rules": {
+            "items": {
+              "$ref": "#/components/schemas/RuleResult"
+            },
+            "type": "array",
+            "title": "Rules"
+          },
+          "recommended_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Recommended Id"
+          },
+          "selected_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Selected Id"
+          },
+          "messages": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Messages"
+          },
+          "method": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Method"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status",
+          "income_paise",
+          "current",
+          "goals_need_paise",
+          "safety_need_paise",
+          "total_need_paise",
+          "rules",
+          "messages",
+          "method"
+        ],
+        "title": "BudgetComparison"
+      },
+      "CareerBreak": {
+        "properties": {
+          "start_in_months": {
+            "type": "integer",
+            "maximum": 600.0,
+            "minimum": 0.0,
+            "title": "Start In Months",
+            "default": 0
+          },
+          "months": {
+            "type": "integer",
+            "maximum": 120.0,
+            "minimum": 1.0,
+            "title": "Months"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "months"
+        ],
+        "title": "CareerBreak"
+      },
+      "ChildEvent": {
+        "properties": {
+          "in_months": {
+            "type": "integer",
+            "maximum": 240.0,
+            "minimum": 0.0,
+            "title": "In Months",
+            "default": 0
+          },
+          "monthly_cost_today_paise": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 10000000000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Monthly Cost Today Paise"
+          },
+          "education_cost_today_paise": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 1000000000000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Education Cost Today Paise"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "ChildEvent"
+      },
+      "ClassRange": {
+        "properties": {
+          "asset_class": {
+            "type": "string",
+            "title": "Asset Class"
+          },
+          "min_pct": {
+            "type": "integer",
+            "title": "Min Pct"
+          },
+          "max_pct": {
+            "type": "integer",
+            "title": "Max Pct"
+          }
+        },
+        "type": "object",
+        "required": [
+          "asset_class",
+          "min_pct",
+          "max_pct"
+        ],
+        "title": "ClassRange"
+      },
+      "CoverCheck": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "recommended_paise": {
+            "type": "integer",
+            "title": "Recommended Paise"
+          },
+          "existing_paise": {
+            "type": "integer",
+            "title": "Existing Paise"
+          },
+          "gap_paise": {
+            "type": "integer",
+            "title": "Gap Paise"
+          },
+          "reasons": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Reasons"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status",
+          "recommended_paise",
+          "existing_paise",
+          "gap_paise",
+          "reasons"
+        ],
+        "title": "CoverCheck"
+      },
       "CoverSource": {
         "type": "string",
         "enum": [
@@ -2673,6 +5162,167 @@
           "personal"
         ],
         "title": "CoverSource"
+      },
+      "DebtOverview": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "total_outstanding_paise": {
+            "type": "integer",
+            "title": "Total Outstanding Paise"
+          },
+          "total_emi_paise": {
+            "type": "integer",
+            "title": "Total Emi Paise"
+          },
+          "debt_to_income_bps": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Debt To Income Bps"
+          },
+          "high_cost_outstanding_paise": {
+            "type": "integer",
+            "title": "High Cost Outstanding Paise"
+          },
+          "loans": {
+            "items": {
+              "$ref": "#/components/schemas/LoanView"
+            },
+            "type": "array",
+            "title": "Loans"
+          },
+          "payoff_order": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Payoff Order"
+          },
+          "messages": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Messages"
+          },
+          "method": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Method"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status",
+          "total_outstanding_paise",
+          "total_emi_paise",
+          "high_cost_outstanding_paise",
+          "loans",
+          "payoff_order",
+          "messages",
+          "method"
+        ],
+        "title": "DebtOverview"
+      },
+      "EmergencyFund": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "monthly_obligations_paise": {
+            "type": "integer",
+            "title": "Monthly Obligations Paise"
+          },
+          "target_months_low": {
+            "type": "integer",
+            "title": "Target Months Low"
+          },
+          "target_months_high": {
+            "type": "integer",
+            "title": "Target Months High"
+          },
+          "target_low_paise": {
+            "type": "integer",
+            "title": "Target Low Paise"
+          },
+          "target_high_paise": {
+            "type": "integer",
+            "title": "Target High Paise"
+          },
+          "current_paise": {
+            "type": "integer",
+            "title": "Current Paise"
+          },
+          "uses_flagged_assets": {
+            "type": "boolean",
+            "title": "Uses Flagged Assets"
+          },
+          "months_covered": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Months Covered"
+          },
+          "gap_to_low_paise": {
+            "type": "integer",
+            "title": "Gap To Low Paise"
+          },
+          "gap_to_high_paise": {
+            "type": "integer",
+            "title": "Gap To High Paise"
+          },
+          "monthly_to_reach_low_in_12m_paise": {
+            "type": "integer",
+            "title": "Monthly To Reach Low In 12M Paise"
+          },
+          "reasons": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Reasons"
+          },
+          "method": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Method"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status",
+          "monthly_obligations_paise",
+          "target_months_low",
+          "target_months_high",
+          "target_low_paise",
+          "target_high_paise",
+          "current_paise",
+          "uses_flagged_assets",
+          "gap_to_low_paise",
+          "gap_to_high_paise",
+          "monthly_to_reach_low_in_12m_paise",
+          "reasons",
+          "method"
+        ],
+        "title": "EmergencyFund"
       },
       "EmploymentType": {
         "type": "string",
@@ -2913,6 +5563,42 @@
         "type": "object",
         "title": "ExpenseUpdate"
       },
+      "ExtraGoal": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 80,
+            "minLength": 1,
+            "title": "Name"
+          },
+          "goal_type": {
+            "type": "string",
+            "pattern": "^(car|home|other)$",
+            "title": "Goal Type"
+          },
+          "cost_today_paise": {
+            "type": "integer",
+            "maximum": 10000000000000.0,
+            "exclusiveMinimum": 0.0,
+            "title": "Cost Today Paise"
+          },
+          "in_months": {
+            "type": "integer",
+            "maximum": 600.0,
+            "minimum": 1.0,
+            "title": "In Months"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "name",
+          "goal_type",
+          "cost_today_paise",
+          "in_months"
+        ],
+        "title": "ExtraGoal"
+      },
       "FinancialSummary": {
         "properties": {
           "monthly_income_paise": {
@@ -3058,6 +5744,413 @@
           "one_time"
         ],
         "title": "Frequency"
+      },
+      "GoalChange": {
+        "properties": {
+          "goal_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Goal Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "before_status": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Before Status"
+          },
+          "after_status": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "After Status"
+          },
+          "before_required_paise": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Before Required Paise"
+          },
+          "after_required_paise": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "After Required Paise"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "title": "GoalChange"
+      },
+      "GoalCreate": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Name"
+          },
+          "goal_type": {
+            "$ref": "#/components/schemas/GoalType"
+          },
+          "priority": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Priority"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "target_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Date"
+          },
+          "current_cost_paise": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 1000000000000000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Current Cost Paise"
+          },
+          "saved_paise": {
+            "type": "integer",
+            "maximum": 1000000000000000.0,
+            "minimum": 0.0,
+            "title": "Saved Paise",
+            "default": 0
+          },
+          "monthly_contribution_paise": {
+            "type": "integer",
+            "maximum": 1000000000000000.0,
+            "minimum": 0.0,
+            "title": "Monthly Contribution Paise",
+            "default": 0
+          },
+          "inflation_bps": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 3000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Inflation Bps"
+          },
+          "expected_return_bps": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 3000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expected Return Bps"
+          },
+          "down_payment_bps": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 10000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Down Payment Bps"
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notes"
+          },
+          "status": {
+            "$ref": "#/components/schemas/GoalStatus",
+            "default": "active"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "name",
+          "goal_type"
+        ],
+        "title": "GoalCreate"
+      },
+      "GoalEvaluation": {
+        "properties": {
+          "goal_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Goal Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "goal_type": {
+            "type": "string",
+            "title": "Goal Type"
+          },
+          "priority": {
+            "type": "string",
+            "title": "Priority"
+          },
+          "goal_status": {
+            "type": "string",
+            "title": "Goal Status"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "target_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Date"
+          },
+          "months_left": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Months Left"
+          },
+          "inflation_bps": {
+            "type": "integer",
+            "title": "Inflation Bps"
+          },
+          "return_bps": {
+            "type": "integer",
+            "title": "Return Bps"
+          },
+          "cost_today_paise": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cost Today Paise"
+          },
+          "future_cost_paise": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Future Cost Paise"
+          },
+          "savings_target_paise": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Savings Target Paise"
+          },
+          "saved_paise": {
+            "type": "integer",
+            "title": "Saved Paise"
+          },
+          "current_monthly_paise": {
+            "type": "integer",
+            "title": "Current Monthly Paise"
+          },
+          "projected_paise": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Projected Paise"
+          },
+          "funded_bps": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Funded Bps"
+          },
+          "required_monthly_paise": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Required Monthly Paise"
+          },
+          "monthly_gap_paise": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Monthly Gap Paise"
+          },
+          "months_to_reach_at_current": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Months To Reach At Current"
+          },
+          "reach_date_at_current": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reach Date At Current"
+          },
+          "home_loan": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/HomeLoanView"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "retirement": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RetirementView"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "messages": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Messages",
+            "default": []
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "goal_type",
+          "priority",
+          "goal_status",
+          "status",
+          "inflation_bps",
+          "return_bps",
+          "saved_paise",
+          "current_monthly_paise"
+        ],
+        "title": "GoalEvaluation"
       },
       "GoalFeasibilityResponse": {
         "properties": {
@@ -3242,6 +6335,162 @@
         "title": "GoalFeasibilityResponse",
         "description": "Comprehensive response for goal feasibility evaluation."
       },
+      "GoalOutcome": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "title": "Date"
+          },
+          "cost_paise": {
+            "type": "integer",
+            "title": "Cost Paise"
+          },
+          "funded_paise": {
+            "type": "integer",
+            "title": "Funded Paise"
+          },
+          "fully_funded": {
+            "type": "boolean",
+            "title": "Fully Funded"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "date",
+          "cost_paise",
+          "funded_paise",
+          "fully_funded"
+        ],
+        "title": "GoalOutcome"
+      },
+      "GoalRead": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "goal_type": {
+            "type": "string",
+            "title": "Goal Type"
+          },
+          "priority": {
+            "type": "string",
+            "title": "Priority"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "target_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Date"
+          },
+          "current_cost_paise": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Current Cost Paise"
+          },
+          "saved_paise": {
+            "type": "integer",
+            "title": "Saved Paise"
+          },
+          "monthly_contribution_paise": {
+            "type": "integer",
+            "title": "Monthly Contribution Paise"
+          },
+          "inflation_bps": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Inflation Bps"
+          },
+          "expected_return_bps": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expected Return Bps"
+          },
+          "down_payment_bps": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Down Payment Bps"
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notes"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updated At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "goal_type",
+          "priority",
+          "status",
+          "saved_paise",
+          "monthly_contribution_paise",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "GoalRead"
+      },
       "GoalResponse": {
         "properties": {
           "id": {
@@ -3326,6 +6575,181 @@
         "title": "GoalResponse",
         "description": "Response payload for financial goal endpoints."
       },
+      "GoalStatus": {
+        "type": "string",
+        "enum": [
+          "active",
+          "paused",
+          "achieved"
+        ],
+        "title": "GoalStatus"
+      },
+      "GoalType": {
+        "type": "string",
+        "enum": [
+          "retirement",
+          "home",
+          "car",
+          "child_education",
+          "wedding",
+          "travel",
+          "big_purchase",
+          "other"
+        ],
+        "title": "GoalType"
+      },
+      "GoalUpdate": {
+        "properties": {
+          "name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 120,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "goal_type": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/GoalType"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "priority": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Priority"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "target_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Date"
+          },
+          "current_cost_paise": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 1000000000000000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Current Cost Paise"
+          },
+          "saved_paise": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 1000000000000000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Saved Paise"
+          },
+          "monthly_contribution_paise": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 1000000000000000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Monthly Contribution Paise"
+          },
+          "inflation_bps": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 3000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Inflation Bps"
+          },
+          "expected_return_bps": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 3000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expected Return Bps"
+          },
+          "down_payment_bps": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 10000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Down Payment Bps"
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notes"
+          },
+          "status": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/GoalStatus"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "GoalUpdate"
+      },
       "GoalUpdateRequest": {
         "properties": {
           "title": {
@@ -3403,6 +6827,185 @@
         "title": "GoalUpdateRequest",
         "description": "Request payload for creating or updating the single active financial goal."
       },
+      "GoalWhatIf": {
+        "properties": {
+          "target_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Date"
+          },
+          "current_cost_paise": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 1000000000000000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Current Cost Paise"
+          },
+          "saved_paise": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 1000000000000000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Saved Paise"
+          },
+          "monthly_contribution_paise": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 1000000000000000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Monthly Contribution Paise"
+          },
+          "inflation_bps": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 3000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Inflation Bps"
+          },
+          "expected_return_bps": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 3000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expected Return Bps"
+          },
+          "down_payment_bps": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 10000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Down Payment Bps"
+          },
+          "retirement_age": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 85.0,
+                "minimum": 30.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Retirement Age"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "GoalWhatIf",
+        "description": "Temporary overrides for one goal; nothing is saved."
+      },
+      "GoalsPlan": {
+        "properties": {
+          "goals": {
+            "items": {
+              "$ref": "#/components/schemas/GoalEvaluation"
+            },
+            "type": "array",
+            "title": "Goals"
+          },
+          "allocation": {
+            "items": {
+              "$ref": "#/components/schemas/app__modules__planning__schemas__GoalAllocation"
+            },
+            "type": "array",
+            "title": "Allocation"
+          },
+          "monthly_surplus_paise": {
+            "type": "integer",
+            "title": "Monthly Surplus Paise"
+          },
+          "total_required_monthly_paise": {
+            "type": "integer",
+            "title": "Total Required Monthly Paise"
+          },
+          "total_current_monthly_paise": {
+            "type": "integer",
+            "title": "Total Current Monthly Paise"
+          },
+          "unfunded_monthly_paise": {
+            "type": "integer",
+            "title": "Unfunded Monthly Paise"
+          },
+          "counts": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Counts"
+          },
+          "assumptions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Assumptions"
+          },
+          "messages": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Messages"
+          }
+        },
+        "type": "object",
+        "required": [
+          "goals",
+          "allocation",
+          "monthly_surplus_paise",
+          "total_required_monthly_paise",
+          "total_current_monthly_paise",
+          "unfunded_monthly_paise",
+          "counts",
+          "assumptions",
+          "messages"
+        ],
+        "title": "GoalsPlan"
+      },
       "HTTPValidationError": {
         "properties": {
           "detail": {
@@ -3415,6 +7018,110 @@
         },
         "type": "object",
         "title": "HTTPValidationError"
+      },
+      "HealthScore": {
+        "properties": {
+          "score": {
+            "type": "integer",
+            "title": "Score"
+          },
+          "band": {
+            "type": "string",
+            "title": "Band"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "parts": {
+            "items": {
+              "$ref": "#/components/schemas/ScorePart"
+            },
+            "type": "array",
+            "title": "Parts"
+          },
+          "method": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Method"
+          }
+        },
+        "type": "object",
+        "required": [
+          "score",
+          "band",
+          "label",
+          "parts",
+          "method"
+        ],
+        "title": "HealthScore"
+      },
+      "HomeLoanView": {
+        "properties": {
+          "price_at_purchase_paise": {
+            "type": "integer",
+            "title": "Price At Purchase Paise"
+          },
+          "down_payment_paise": {
+            "type": "integer",
+            "title": "Down Payment Paise"
+          },
+          "extra_costs_paise": {
+            "type": "integer",
+            "title": "Extra Costs Paise"
+          },
+          "loan_paise": {
+            "type": "integer",
+            "title": "Loan Paise"
+          },
+          "loan_rate_bps": {
+            "type": "integer",
+            "title": "Loan Rate Bps"
+          },
+          "loan_months": {
+            "type": "integer",
+            "title": "Loan Months"
+          },
+          "emi_paise": {
+            "type": "integer",
+            "title": "Emi Paise"
+          },
+          "emi_to_income_bps": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Emi To Income Bps"
+          },
+          "affordable": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Affordable"
+          }
+        },
+        "type": "object",
+        "required": [
+          "price_at_purchase_paise",
+          "down_payment_paise",
+          "extra_costs_paise",
+          "loan_paise",
+          "loan_rate_bps",
+          "loan_months",
+          "emi_paise"
+        ],
+        "title": "HomeLoanView"
       },
       "HouseholdProfileRead": {
         "properties": {
@@ -3893,6 +7600,272 @@
         "type": "object",
         "title": "IncomeUpdate"
       },
+      "InputChange": {
+        "properties": {
+          "area": {
+            "type": "string",
+            "title": "Area"
+          },
+          "kind": {
+            "type": "string",
+            "title": "Kind"
+          },
+          "item": {
+            "type": "string",
+            "title": "Item"
+          },
+          "text": {
+            "type": "string",
+            "title": "Text"
+          }
+        },
+        "type": "object",
+        "required": [
+          "area",
+          "kind",
+          "item",
+          "text"
+        ],
+        "title": "InputChange"
+      },
+      "Journey": {
+        "properties": {
+          "scenario": {
+            "type": "string",
+            "title": "Scenario"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "params": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Params"
+          },
+          "points": {
+            "items": {
+              "$ref": "#/components/schemas/YearPoint"
+            },
+            "type": "array",
+            "title": "Points"
+          },
+          "milestones": {
+            "items": {
+              "$ref": "#/components/schemas/Milestone"
+            },
+            "type": "array",
+            "title": "Milestones"
+          },
+          "summary": {
+            "$ref": "#/components/schemas/JourneySummary"
+          }
+        },
+        "type": "object",
+        "required": [
+          "scenario",
+          "label",
+          "params",
+          "points",
+          "milestones",
+          "summary"
+        ],
+        "title": "Journey"
+      },
+      "JourneySet": {
+        "properties": {
+          "base": {
+            "$ref": "#/components/schemas/Journey"
+          },
+          "stress": {
+            "$ref": "#/components/schemas/Journey"
+          },
+          "upside": {
+            "$ref": "#/components/schemas/Journey"
+          },
+          "assumptions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Assumptions"
+          },
+          "notes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Notes"
+          }
+        },
+        "type": "object",
+        "required": [
+          "base",
+          "stress",
+          "upside",
+          "assumptions",
+          "notes"
+        ],
+        "title": "JourneySet"
+      },
+      "JourneySummary": {
+        "properties": {
+          "months": {
+            "type": "integer",
+            "title": "Months"
+          },
+          "net_worth_now_paise": {
+            "type": "integer",
+            "title": "Net Worth Now Paise"
+          },
+          "retirement_month": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Retirement Month"
+          },
+          "retirement_age": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Retirement Age"
+          },
+          "net_worth_at_retirement_paise": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Net Worth At Retirement Paise"
+          },
+          "net_worth_at_retirement_real_paise": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Net Worth At Retirement Real Paise"
+          },
+          "savings_at_retirement_paise": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Savings At Retirement Paise"
+          },
+          "corpus_needed_paise": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Corpus Needed Paise"
+          },
+          "retirement_readiness_bps": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Retirement Readiness Bps"
+          },
+          "depleted_month": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Depleted Month"
+          },
+          "depleted_age": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Depleted Age"
+          },
+          "money_lasts_to_age": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Money Lasts To Age"
+          },
+          "final_net_worth_paise": {
+            "type": "integer",
+            "title": "Final Net Worth Paise"
+          },
+          "final_net_worth_real_paise": {
+            "type": "integer",
+            "title": "Final Net Worth Real Paise"
+          },
+          "goals": {
+            "items": {
+              "$ref": "#/components/schemas/GoalOutcome"
+            },
+            "type": "array",
+            "title": "Goals"
+          },
+          "goals_fully_funded": {
+            "type": "integer",
+            "title": "Goals Fully Funded"
+          },
+          "goals_total": {
+            "type": "integer",
+            "title": "Goals Total"
+          }
+        },
+        "type": "object",
+        "required": [
+          "months",
+          "net_worth_now_paise",
+          "final_net_worth_paise",
+          "final_net_worth_real_paise",
+          "goals",
+          "goals_fully_funded",
+          "goals_total"
+        ],
+        "title": "JourneySummary"
+      },
       "LiabilityCreate": {
         "properties": {
           "name": {
@@ -4163,6 +8136,97 @@
         ],
         "title": "Liquidity"
       },
+      "LoanView": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "liability_type": {
+            "type": "string",
+            "title": "Liability Type"
+          },
+          "outstanding_paise": {
+            "type": "integer",
+            "title": "Outstanding Paise"
+          },
+          "interest_rate_bps": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Interest Rate Bps"
+          },
+          "emi_paise": {
+            "type": "integer",
+            "title": "Emi Paise"
+          },
+          "months_left": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Months Left"
+          },
+          "payoff_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Payoff Date"
+          },
+          "interest_remaining_paise": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Interest Remaining Paise"
+          },
+          "high_cost": {
+            "type": "boolean",
+            "title": "High Cost"
+          },
+          "notes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Notes"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "liability_type",
+          "outstanding_paise",
+          "emi_paise",
+          "high_cost",
+          "notes"
+        ],
+        "title": "LoanView"
+      },
       "MaritalStatus": {
         "type": "string",
         "enum": [
@@ -4361,6 +8425,181 @@
         "type": "object",
         "title": "MemberUpdate"
       },
+      "MetricChange": {
+        "properties": {
+          "metric": {
+            "type": "string",
+            "title": "Metric"
+          },
+          "before": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Before"
+          },
+          "after": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "After"
+          },
+          "delta": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Delta"
+          },
+          "kind": {
+            "type": "string",
+            "title": "Kind"
+          },
+          "better": {
+            "type": "string",
+            "title": "Better"
+          },
+          "improved": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Improved"
+          }
+        },
+        "type": "object",
+        "required": [
+          "metric",
+          "kind",
+          "better"
+        ],
+        "title": "MetricChange"
+      },
+      "Milestone": {
+        "properties": {
+          "month": {
+            "type": "integer",
+            "title": "Month"
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "title": "Date"
+          },
+          "age": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Age"
+          },
+          "kind": {
+            "type": "string",
+            "title": "Kind"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "amount_paise": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Amount Paise"
+          }
+        },
+        "type": "object",
+        "required": [
+          "month",
+          "date",
+          "kind",
+          "label"
+        ],
+        "title": "Milestone"
+      },
+      "MixCompare": {
+        "properties": {
+          "asset_class": {
+            "type": "string",
+            "title": "Asset Class"
+          },
+          "current_pct": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Current Pct"
+          },
+          "target_min_pct": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Min Pct"
+          },
+          "target_max_pct": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Max Pct"
+          },
+          "position": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Position"
+          }
+        },
+        "type": "object",
+        "required": [
+          "asset_class"
+        ],
+        "title": "MixCompare"
+      },
       "OnboardingStatus": {
         "properties": {
           "steps": {
@@ -4445,6 +8684,135 @@
           "other"
         ],
         "title": "Owner"
+      },
+      "PlanDiff": {
+        "properties": {
+          "from_label": {
+            "type": "string",
+            "title": "From Label"
+          },
+          "to_label": {
+            "type": "string",
+            "title": "To Label"
+          },
+          "input_changes": {
+            "items": {
+              "$ref": "#/components/schemas/InputChange"
+            },
+            "type": "array",
+            "title": "Input Changes"
+          },
+          "metric_changes": {
+            "items": {
+              "$ref": "#/components/schemas/MetricChange"
+            },
+            "type": "array",
+            "title": "Metric Changes"
+          },
+          "goal_changes": {
+            "items": {
+              "$ref": "#/components/schemas/GoalChange"
+            },
+            "type": "array",
+            "title": "Goal Changes"
+          },
+          "assumption_changes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Assumption Changes"
+          },
+          "summary": {
+            "type": "string",
+            "title": "Summary"
+          }
+        },
+        "type": "object",
+        "required": [
+          "from_label",
+          "to_label",
+          "input_changes",
+          "metric_changes",
+          "goal_changes",
+          "assumption_changes",
+          "summary"
+        ],
+        "title": "PlanDiff"
+      },
+      "PlanOverview": {
+        "properties": {
+          "emergency_status": {
+            "type": "string",
+            "title": "Emergency Status"
+          },
+          "debt_status": {
+            "type": "string",
+            "title": "Debt Status"
+          },
+          "life_status": {
+            "type": "string",
+            "title": "Life Status"
+          },
+          "health_status": {
+            "type": "string",
+            "title": "Health Status"
+          },
+          "goals_counts": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Goals Counts"
+          },
+          "renewals_due": {
+            "type": "integer",
+            "title": "Renewals Due"
+          },
+          "budget_recommended": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Budget Recommended"
+          },
+          "budget_selected": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Budget Selected"
+          },
+          "latest_version": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latest Version"
+          }
+        },
+        "type": "object",
+        "required": [
+          "emergency_status",
+          "debt_status",
+          "life_status",
+          "health_status",
+          "goals_counts",
+          "renewals_due"
+        ],
+        "title": "PlanOverview"
       },
       "PolicyCreate": {
         "properties": {
@@ -4684,6 +9052,107 @@
         "additionalProperties": false,
         "type": "object",
         "title": "PolicyUpdate"
+      },
+      "PrepayRequest": {
+        "properties": {
+          "lump_sum_paise": {
+            "type": "integer",
+            "maximum": 1000000000000000.0,
+            "minimum": 0.0,
+            "title": "Lump Sum Paise",
+            "default": 0
+          },
+          "extra_monthly_paise": {
+            "type": "integer",
+            "maximum": 1000000000000000.0,
+            "minimum": 0.0,
+            "title": "Extra Monthly Paise",
+            "default": 0
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "PrepayRequest"
+      },
+      "PrepayScenario": {
+        "properties": {
+          "loan_id": {
+            "type": "string",
+            "title": "Loan Id"
+          },
+          "lump_sum_paise": {
+            "type": "integer",
+            "title": "Lump Sum Paise"
+          },
+          "extra_monthly_paise": {
+            "type": "integer",
+            "title": "Extra Monthly Paise"
+          },
+          "investment_return_bps": {
+            "type": "integer",
+            "title": "Investment Return Bps"
+          },
+          "base_months": {
+            "type": "integer",
+            "title": "Base Months"
+          },
+          "new_months": {
+            "type": "integer",
+            "title": "New Months"
+          },
+          "months_saved": {
+            "type": "integer",
+            "title": "Months Saved"
+          },
+          "interest_saved_paise": {
+            "type": "integer",
+            "title": "Interest Saved Paise"
+          },
+          "wealth_if_prepay_paise": {
+            "type": "integer",
+            "title": "Wealth If Prepay Paise"
+          },
+          "wealth_if_invest_paise": {
+            "type": "integer",
+            "title": "Wealth If Invest Paise"
+          },
+          "better_option": {
+            "type": "string",
+            "title": "Better Option"
+          },
+          "explanation": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Explanation"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loan_id",
+          "lump_sum_paise",
+          "extra_monthly_paise",
+          "investment_return_bps",
+          "base_months",
+          "new_months",
+          "months_saved",
+          "interest_saved_paise",
+          "wealth_if_prepay_paise",
+          "wealth_if_invest_paise",
+          "better_option",
+          "explanation"
+        ],
+        "title": "PrepayScenario"
+      },
+      "Priority": {
+        "type": "string",
+        "enum": [
+          "essential",
+          "important",
+          "aspirational"
+        ],
+        "title": "Priority"
       },
       "ProfileResponse": {
         "properties": {
@@ -4998,6 +9467,46 @@
         "title": "ProfileUpdateRequest",
         "description": "Request payload for creating or partially updating a financial profile.\n\nAccepts rupee values as decimal strings (e.g. \"150000.00\") or integer paise.\nOmitted fields preserve existing values; explicit null clears the field; explicit 0 stores zero."
       },
+      "Protection": {
+        "properties": {
+          "life": {
+            "$ref": "#/components/schemas/CoverCheck"
+          },
+          "health": {
+            "$ref": "#/components/schemas/CoverCheck"
+          },
+          "renewals": {
+            "items": {
+              "$ref": "#/components/schemas/Renewal"
+            },
+            "type": "array",
+            "title": "Renewals"
+          },
+          "messages": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Messages"
+          },
+          "method": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Method"
+          }
+        },
+        "type": "object",
+        "required": [
+          "life",
+          "health",
+          "renewals",
+          "messages",
+          "method"
+        ],
+        "title": "Protection"
+      },
       "Relationship": {
         "type": "string",
         "enum": [
@@ -5008,6 +9517,399 @@
           "other"
         ],
         "title": "Relationship"
+      },
+      "Renewal": {
+        "properties": {
+          "policy_id": {
+            "type": "string",
+            "title": "Policy Id"
+          },
+          "policy_type": {
+            "type": "string",
+            "title": "Policy Type"
+          },
+          "renewal_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Renewal Date"
+          },
+          "days_left": {
+            "type": "integer",
+            "title": "Days Left"
+          }
+        },
+        "type": "object",
+        "required": [
+          "policy_id",
+          "policy_type",
+          "renewal_date",
+          "days_left"
+        ],
+        "title": "Renewal"
+      },
+      "RetirementView": {
+        "properties": {
+          "retirement_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Retirement Date"
+          },
+          "retirement_age": {
+            "type": "integer",
+            "title": "Retirement Age"
+          },
+          "years_in_retirement": {
+            "type": "integer",
+            "title": "Years In Retirement"
+          },
+          "monthly_spend_today_paise": {
+            "type": "integer",
+            "title": "Monthly Spend Today Paise"
+          },
+          "monthly_spend_at_retirement_paise": {
+            "type": "integer",
+            "title": "Monthly Spend At Retirement Paise"
+          },
+          "post_retirement_return_bps": {
+            "type": "integer",
+            "title": "Post Retirement Return Bps"
+          }
+        },
+        "type": "object",
+        "required": [
+          "retirement_date",
+          "retirement_age",
+          "years_in_retirement",
+          "monthly_spend_today_paise",
+          "monthly_spend_at_retirement_paise",
+          "post_retirement_return_bps"
+        ],
+        "title": "RetirementView"
+      },
+      "RiskProfile": {
+        "properties": {
+          "answered": {
+            "type": "boolean",
+            "title": "Answered"
+          },
+          "willingness_band": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Willingness Band"
+          },
+          "capacity_band": {
+            "type": "integer",
+            "title": "Capacity Band"
+          },
+          "final_band": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Final Band"
+          },
+          "final_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Final Name"
+          },
+          "equity_cap_pct": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Equity Cap Pct"
+          },
+          "capacity_reasons": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Capacity Reasons"
+          },
+          "limiting_factor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Limiting Factor"
+          }
+        },
+        "type": "object",
+        "required": [
+          "answered",
+          "capacity_band",
+          "capacity_reasons"
+        ],
+        "title": "RiskProfile"
+      },
+      "RiskQuestion": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "text": {
+            "type": "string",
+            "title": "Text"
+          },
+          "options": {
+            "items": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Options"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "text",
+          "options"
+        ],
+        "title": "RiskQuestion"
+      },
+      "RuleResult": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description"
+          },
+          "target": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Split"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "plan": {
+            "$ref": "#/components/schemas/Split"
+          },
+          "feasible": {
+            "type": "boolean",
+            "title": "Feasible"
+          },
+          "needs_over_paise": {
+            "type": "integer",
+            "title": "Needs Over Paise"
+          },
+          "wants_cut_paise": {
+            "type": "integer",
+            "title": "Wants Cut Paise"
+          },
+          "savings_increase_paise": {
+            "type": "integer",
+            "title": "Savings Increase Paise"
+          },
+          "coverage_bps": {
+            "type": "integer",
+            "title": "Coverage Bps"
+          },
+          "tradeoff": {
+            "type": "string",
+            "title": "Tradeoff"
+          },
+          "recommended": {
+            "type": "boolean",
+            "title": "Recommended",
+            "default": false
+          },
+          "selected": {
+            "type": "boolean",
+            "title": "Selected",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "description",
+          "plan",
+          "feasible",
+          "needs_over_paise",
+          "wants_cut_paise",
+          "savings_increase_paise",
+          "coverage_bps",
+          "tradeoff"
+        ],
+        "title": "RuleResult"
+      },
+      "ScorePart": {
+        "properties": {
+          "key": {
+            "type": "string",
+            "title": "Key"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "points": {
+            "type": "integer",
+            "title": "Points"
+          },
+          "max_points": {
+            "type": "integer",
+            "title": "Max Points"
+          },
+          "detail": {
+            "type": "string",
+            "title": "Detail"
+          },
+          "tip": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tip"
+          },
+          "link": {
+            "type": "string",
+            "title": "Link"
+          }
+        },
+        "type": "object",
+        "required": [
+          "key",
+          "name",
+          "points",
+          "max_points",
+          "detail",
+          "link"
+        ],
+        "title": "ScorePart"
+      },
+      "SimulateRequest": {
+        "properties": {
+          "scenario": {
+            "type": "string",
+            "pattern": "^(base|stress|upside)$",
+            "title": "Scenario",
+            "default": "base"
+          },
+          "what_if": {
+            "$ref": "#/components/schemas/WhatIf"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "what_if"
+        ],
+        "title": "SimulateRequest"
+      },
+      "SnoozeRequest": {
+        "properties": {
+          "days": {
+            "type": "integer",
+            "maximum": 90.0,
+            "minimum": 1.0,
+            "title": "Days",
+            "default": 7
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "SnoozeRequest"
+      },
+      "Split": {
+        "properties": {
+          "needs_paise": {
+            "type": "integer",
+            "title": "Needs Paise"
+          },
+          "wants_paise": {
+            "type": "integer",
+            "title": "Wants Paise"
+          },
+          "savings_paise": {
+            "type": "integer",
+            "title": "Savings Paise"
+          },
+          "needs_bps": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Needs Bps"
+          },
+          "wants_bps": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Wants Bps"
+          },
+          "savings_bps": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Savings Bps"
+          }
+        },
+        "type": "object",
+        "required": [
+          "needs_paise",
+          "wants_paise",
+          "savings_paise"
+        ],
+        "title": "Split"
       },
       "TaxRegime": {
         "type": "string",
@@ -5079,6 +9981,577 @@
           "type"
         ],
         "title": "ValidationError"
+      },
+      "VerifyResult": {
+        "properties": {
+          "reproducible": {
+            "type": "boolean",
+            "title": "Reproducible"
+          },
+          "model_version_matches": {
+            "type": "boolean",
+            "title": "Model Version Matches"
+          },
+          "differences": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Differences"
+          }
+        },
+        "type": "object",
+        "required": [
+          "reproducible",
+          "model_version_matches",
+          "differences"
+        ],
+        "title": "VerifyResult"
+      },
+      "VersionCreate": {
+        "properties": {
+          "label": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 120
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Label"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "VersionCreate"
+      },
+      "VersionDetail": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "number": {
+            "type": "integer",
+            "title": "Number"
+          },
+          "label": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Label"
+          },
+          "as_of": {
+            "type": "string",
+            "format": "date",
+            "title": "As Of"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          },
+          "model_version": {
+            "type": "string",
+            "title": "Model Version"
+          },
+          "assumptions_version": {
+            "type": "string",
+            "title": "Assumptions Version"
+          },
+          "net_worth_paise": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Net Worth Paise"
+          },
+          "monthly_surplus_paise": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Monthly Surplus Paise"
+          },
+          "goals_on_track": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Goals On Track"
+          },
+          "goals_total": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Goals Total"
+          },
+          "assumptions_hash": {
+            "type": "string",
+            "title": "Assumptions Hash"
+          },
+          "inputs": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Inputs"
+          },
+          "outputs": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Outputs"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "number",
+          "as_of",
+          "created_at",
+          "model_version",
+          "assumptions_version",
+          "assumptions_hash",
+          "inputs",
+          "outputs"
+        ],
+        "title": "VersionDetail"
+      },
+      "VersionSummary": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "number": {
+            "type": "integer",
+            "title": "Number"
+          },
+          "label": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Label"
+          },
+          "as_of": {
+            "type": "string",
+            "format": "date",
+            "title": "As Of"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          },
+          "model_version": {
+            "type": "string",
+            "title": "Model Version"
+          },
+          "assumptions_version": {
+            "type": "string",
+            "title": "Assumptions Version"
+          },
+          "net_worth_paise": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Net Worth Paise"
+          },
+          "monthly_surplus_paise": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Monthly Surplus Paise"
+          },
+          "goals_on_track": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Goals On Track"
+          },
+          "goals_total": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Goals Total"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "number",
+          "as_of",
+          "created_at",
+          "model_version",
+          "assumptions_version"
+        ],
+        "title": "VersionSummary"
+      },
+      "WhatIf": {
+        "properties": {
+          "salary_growth_bps": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 3000.0,
+                "minimum": -2000.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Salary Growth Bps"
+          },
+          "inflation_bps": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 2000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Inflation Bps"
+          },
+          "return_shift_bps": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 1000.0,
+                "minimum": -1000.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Return Shift Bps"
+          },
+          "spend_change_bps": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 10000.0,
+                "minimum": -10000.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Spend Change Bps"
+          },
+          "retirement_age": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 85.0,
+                "minimum": 30.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Retirement Age"
+          },
+          "career_break": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CareerBreak"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "extra_goals": {
+            "items": {
+              "$ref": "#/components/schemas/ExtraGoal"
+            },
+            "type": "array",
+            "maxItems": 5,
+            "title": "Extra Goals"
+          },
+          "child": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ChildEvent"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "windfall": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Windfall"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "WhatIf",
+        "description": "Changes layered on a scenario. Every field is optional."
+      },
+      "WhatIfComparison": {
+        "properties": {
+          "base": {
+            "$ref": "#/components/schemas/Journey"
+          },
+          "what_if": {
+            "$ref": "#/components/schemas/Journey"
+          },
+          "lines": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Lines"
+          }
+        },
+        "type": "object",
+        "required": [
+          "base",
+          "what_if",
+          "lines"
+        ],
+        "title": "WhatIfComparison"
+      },
+      "Windfall": {
+        "properties": {
+          "in_months": {
+            "type": "integer",
+            "maximum": 600.0,
+            "minimum": 0.0,
+            "title": "In Months",
+            "default": 0
+          },
+          "amount_paise": {
+            "type": "integer",
+            "maximum": 10000000000000.0,
+            "exclusiveMinimum": 0.0,
+            "title": "Amount Paise"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "amount_paise"
+        ],
+        "title": "Windfall"
+      },
+      "YearPoint": {
+        "properties": {
+          "year": {
+            "type": "integer",
+            "title": "Year"
+          },
+          "month": {
+            "type": "integer",
+            "title": "Month"
+          },
+          "age": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Age"
+          },
+          "net_worth_paise": {
+            "type": "integer",
+            "title": "Net Worth Paise"
+          },
+          "net_worth_real_paise": {
+            "type": "integer",
+            "title": "Net Worth Real Paise"
+          },
+          "liquid_paise": {
+            "type": "integer",
+            "title": "Liquid Paise"
+          },
+          "invested_paise": {
+            "type": "integer",
+            "title": "Invested Paise"
+          },
+          "property_paise": {
+            "type": "integer",
+            "title": "Property Paise"
+          },
+          "debt_paise": {
+            "type": "integer",
+            "title": "Debt Paise"
+          },
+          "income_paise": {
+            "type": "integer",
+            "title": "Income Paise"
+          },
+          "spend_paise": {
+            "type": "integer",
+            "title": "Spend Paise"
+          }
+        },
+        "type": "object",
+        "required": [
+          "year",
+          "month",
+          "net_worth_paise",
+          "net_worth_real_paise",
+          "liquid_paise",
+          "invested_paise",
+          "property_paise",
+          "debt_paise",
+          "income_paise",
+          "spend_paise"
+        ],
+        "title": "YearPoint"
+      },
+      "app__modules__planning__allocation__GoalAllocation": {
+        "properties": {
+          "goal_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Goal Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "horizon_band": {
+            "type": "string",
+            "title": "Horizon Band"
+          },
+          "horizon_label": {
+            "type": "string",
+            "title": "Horizon Label"
+          },
+          "months_left": {
+            "type": "integer",
+            "title": "Months Left"
+          },
+          "ranges": {
+            "items": {
+              "$ref": "#/components/schemas/ClassRange"
+            },
+            "type": "array",
+            "title": "Ranges"
+          },
+          "notes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Notes"
+          }
+        },
+        "type": "object",
+        "required": [
+          "goal_id",
+          "name",
+          "horizon_band",
+          "horizon_label",
+          "months_left",
+          "ranges",
+          "notes"
+        ],
+        "title": "GoalAllocation"
+      },
+      "app__modules__planning__schemas__GoalAllocation": {
+        "properties": {
+          "goal_id": {
+            "type": "string",
+            "title": "Goal Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "priority": {
+            "type": "string",
+            "title": "Priority"
+          },
+          "required_monthly_paise": {
+            "type": "integer",
+            "title": "Required Monthly Paise"
+          },
+          "allocated_paise": {
+            "type": "integer",
+            "title": "Allocated Paise"
+          },
+          "fully_funded": {
+            "type": "boolean",
+            "title": "Fully Funded"
+          }
+        },
+        "type": "object",
+        "required": [
+          "goal_id",
+          "name",
+          "priority",
+          "required_monthly_paise",
+          "allocated_paise",
+          "fully_funded"
+        ],
+        "title": "GoalAllocation"
       }
     }
   }

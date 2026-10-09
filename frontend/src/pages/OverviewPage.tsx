@@ -1,6 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useHousehold, useOnboarding, useSummary } from '../api/financialState';
+import { usePlanOverview } from '../api/planning';
+import { Pill } from '../features/planning/ui';
+import { DashboardExtras } from '../features/planning/dashboard';
 import { MetricTile } from '../components/common/MetricTile';
 import { formatCompactINR, bpsToPercent } from '../utils/money';
 import { formatINR } from '../utils/currency';
@@ -11,6 +14,8 @@ export const OverviewPage: React.FC = () => {
   const summary = useSummary();
   const onboarding = useOnboarding();
   const household = useHousehold();
+  const plan = usePlanOverview();
+  const po = plan.data;
   const s = summary.data;
   const ob = onboarding.data;
 
@@ -32,6 +37,23 @@ export const OverviewPage: React.FC = () => {
           <Link className="btn btn--primary btn--sm" to={`/setup/${ob.next_step === 'liabilities' ? 'loans' : ob.next_step ?? 'profile'}`}>Continue setup</Link>
         </div>
       )}
+
+      {po && (
+        <section className="plan-health">
+          <Link to="/safety" className="card plan-health__item"><span>Emergency fund</span><Pill status={po.emergency_status} /></Link>
+          <Link to="/safety" className="card plan-health__item"><span>Loans</span><Pill status={po.debt_status} /></Link>
+          <Link to="/safety" className="card plan-health__item"><span>Life cover</span><Pill status={po.life_status} /></Link>
+          <Link to="/safety" className="card plan-health__item"><span>Health cover</span><Pill status={po.health_status} /></Link>
+          <Link to="/goals" className="card plan-health__item">
+            <span>Goals</span>
+            {Object.values(po.goals_counts).some(Boolean)
+              ? <span className="plan-health__goals">{po.goals_counts.on_track ?? 0} on track · {(po.goals_counts.at_risk ?? 0) + (po.goals_counts.off_track ?? 0)} need help</span>
+              : <span className="plan-health__goals">Add your first goal →</span>}
+          </Link>
+        </section>
+      )}
+
+      {ob?.completed_count ? <DashboardExtras /> : null}
 
       {summary.isLoading && <p className="muted">Loading…</p>}
       {summary.isError && <div className="form-alert form-alert--error">{(summary.error as Error).message}</div>}

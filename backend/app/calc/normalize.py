@@ -44,3 +44,11 @@ def ratio_bps(numerator: int, denominator: int) -> int | None:
     if denominator <= 0:
         return None
     return _div_round_half_up(numerator * 10000, denominator)
+
+
+def inr_text(paise: int) -> str:
+    """Whole rupees with Indian grouping for messages: 12345678 paise -> '₹1,23,457'; negatives get '-'."""
+    from app.domain.money import _format_indian_number
+
+    rupees = (abs(paise) + 50) // 100
+    return f"{'-' if paise < 0 else ''}₹{_format_indian_number(rupees)}"

@@ -6,10 +6,19 @@ import { ClientError, setTokenGetter } from './api/http';
 import { AuthProvider, useAuth } from './auth/AuthContext';
 import { SpinnerIcon } from './components/common/Icons';
 import { AppLayout } from './components/layout/AppLayout';
+import { AlertsPage } from './pages/AlertsPage';
+import { BudgetPage } from './pages/BudgetPage';
 import { GoalCheckPage } from './pages/GoalCheckPage';
+import { GoalDetailPage } from './pages/GoalDetailPage';
+import { GoalEditorPage } from './pages/GoalEditorPage';
+import { GoalsPage } from './pages/GoalsPage';
+import { InvestingPage } from './pages/InvestingPage';
+import { JourneyPage } from './pages/JourneyPage';
 import { LoginPage } from './pages/LoginPage';
 import { OnboardingPage } from './pages/OnboardingPage';
 import { OverviewPage } from './pages/OverviewPage';
+import { PlanPage } from './pages/PlanPage';
+import { SafetyPage } from './pages/SafetyPage';
 import { SettingsPage } from './pages/SettingsPage';
 
 const queryClient = new QueryClient({
@@ -59,6 +68,17 @@ const App: React.FC = () => (
             <Route path="overview" element={<OverviewPage />} />
             <Route path="setup" element={<Navigate to="/setup/profile" replace />} />
             <Route path="setup/:step" element={<OnboardingPage />} />
+            <Route path="goals" element={<GoalsPage />} />
+            <Route path="goals/new" element={<GoalEditorPage />} />
+            <Route path="goals/:id" element={<GoalDetailPage />} />
+            <Route path="goals/:id/edit" element={<GoalEditorPage />} />
+            <Route path="safety" element={<SafetyPage />} />
+            <Route path="budget" element={<BudgetPage />} />
+            <Route path="investing" element={<InvestingPage />} />
+            <Route path="plan" element={<PlanPage />} />
+            <Route path="journey" element={<JourneyPage />} />
+            <Route path="alerts" element={<AlertsPage />} />
+            {/* Original single-goal prototype; superseded by /goals, kept until removed. */}
             <Route path="goal-check" element={<GoalCheckPage />} />
             <Route path="account" element={<SettingsPage />} />
           </Route>

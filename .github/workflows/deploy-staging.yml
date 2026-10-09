@@ -52,6 +52,17 @@ jobs:
             --set-secrets DATABASE_URL=database-url:latest \
             --execute-now --wait
 
+      - name: Deploy daily alerts job (Cloud Run Job, run by Cloud Scheduler)
+        run: |
+          gcloud run jobs deploy finance-daily-alerts \
+            --image "$IMAGE" --region "$REGION" \
+            --command python --args=-m,app.jobs.daily_alerts \
+            --set-cloudsql-instances "${{ vars.CLOUD_SQL_INSTANCE }}" \
+            --service-account "finance-api@${{ vars.GCP_PROJECT_ID }}.iam.gserviceaccount.com" \
+            --set-env-vars ENVIRONMENT=staging,AUTH_MODE=firebase,AUTO_CREATE_TABLES=false \
+            --set-secrets DATABASE_URL=database-url:latest \
+            --task-timeout 30m --max-retries 1
+
       - name: Deploy API to Cloud Run
         run: |
           gcloud run deploy "$SERVICE" \

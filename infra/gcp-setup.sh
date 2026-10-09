@@ -80,6 +80,15 @@ done
 gcloud iam service-accounts add-iam-policy-binding "$API_SA" \
   --member="serviceAccount:$DEPLOY_SA" --role=roles/iam.serviceAccountUser --quiet >/dev/null
 
+step "Daily alerts schedule (08:00 IST) -> Cloud Run Job finance-daily-alerts"
+grant "serviceAccount:$API_SA" roles/run.invoker
+exists gcloud scheduler jobs describe finance-daily-alerts --location="$REGION" \
+  || gcloud scheduler jobs create http finance-daily-alerts --location="$REGION" \
+       --schedule="0 8 * * *" --time-zone="Asia/Kolkata" --http-method=POST \
+       --uri="https://run.googleapis.com/v2/projects/${PROJECT_ID}/locations/${REGION}/jobs/finance-daily-alerts:run" \
+       --oauth-service-account-email="$API_SA"
+echo "(The job itself is created by the first GitHub deploy; the schedule simply fails until then.)"
+
 step "Workload Identity Federation for GitHub Actions (no key files)"
 exists gcloud iam workload-identity-pools describe github --location=global \
   || gcloud iam workload-identity-pools create github --location=global --display-name="GitHub Actions"

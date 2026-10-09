@@ -44,6 +44,7 @@ export function useSaveHousehold() {
     onSuccess: (data) => {
       qc.setQueryData(keys.household, data);
       qc.invalidateQueries({ queryKey: keys.onboarding });
+      qc.invalidateQueries({ queryKey: ['plan'] });
     },
   });
 }
@@ -76,6 +77,7 @@ export function useCollectionMutations(c: Collection) {
     qc.invalidateQueries({ queryKey: keys.collection(c) });
     qc.invalidateQueries({ queryKey: keys.summary });
     qc.invalidateQueries({ queryKey: keys.onboarding });
+    qc.invalidateQueries({ queryKey: ['plan'] }); // goals and safety checks depend on this data
   };
   return {
     create: useMutation({
