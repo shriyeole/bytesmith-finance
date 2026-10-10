@@ -5,10 +5,10 @@ Production (Cloud Run) must set ENVIRONMENT=production, DATABASE_URL and AUTH_MO
 """
 
 from functools import lru_cache
-from typing import List, Literal
+from typing import Annotated, List, Literal
 
 from pydantic import field_validator, model_validator
-from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic_settings import BaseSettings, NoDecode, SettingsConfigDict
 
 
 class Settings(BaseSettings):
@@ -28,7 +28,8 @@ class Settings(BaseSettings):
     firebase_project_id: str = ""
     dev_default_user_id: str = "user_default"
 
-    cors_origins: List[str] = ["http://localhost:5173", "http://127.0.0.1:5173"]
+    # Comma-separated in .env / env vars ("http://a,http://b"); JSON lists also work.
+    cors_origins: Annotated[List[str], NoDecode] = ["http://localhost:5173", "http://127.0.0.1:5173"]
 
     # M6 asset-class guidance stays off in production until counsel signs off (spec §13).
     feature_allocation: bool = True
@@ -36,6 +37,9 @@ class Settings(BaseSettings):
     @field_validator("cors_origins", mode="before")
     @classmethod
     def _split_origins(cls, v):
+        if isinstance(v, str) and v.strip().startswith("["):
+            import json
+            return json.loads(v)
         if isinstance(v, str):
             return [o.strip() for o in v.split(",") if o.strip()]
         return v

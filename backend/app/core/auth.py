@@ -7,6 +7,7 @@ Development/test: AUTH_MODE=dev accepts `Authorization: Bearer dev:<uid>`; with 
 request acts as DEV_DEFAULT_USER_ID. Dev mode is refused at startup in staging/production.
 """
 
+import logging
 from dataclasses import dataclass
 from typing import Optional
 
@@ -16,6 +17,8 @@ from sqlalchemy.orm import Session
 from app.core.config import Settings, get_settings
 from app.core.models import User
 from app.database import get_db
+
+log = logging.getLogger("app.auth")
 
 
 @dataclass(frozen=True)
@@ -41,16 +44,42 @@ def _bearer(authorization: Optional[str]) -> Optional[str]:
     return token.strip()
 
 
+def _admin_credential():
+    """Google credentials if the machine has them (Cloud Run always does), else anonymous.
+
+    Verifying an ID token only needs Google's public signing keys, so a developer laptop
+    without `gcloud auth application-default login` can still run with real Firebase login.
+    """
+    import google.auth
+    from firebase_admin import credentials
+    from google.auth.credentials import AnonymousCredentials
+    from google.auth.exceptions import DefaultCredentialsError
+
+    try:
+        google.auth.default()
+        return credentials.ApplicationDefault()
+    except DefaultCredentialsError:
+        class _Anonymous(credentials.Base):
+            def get_credential(self):
+                return AnonymousCredentials()
+
+        log.info("No Google credentials on this machine; verifying Firebase tokens anonymously.")
+        return _Anonymous()
+
+
 def _verify_firebase(token: str, settings: Settings) -> Identity:
     import firebase_admin
     from firebase_admin import auth as fb_auth
 
     if not firebase_admin._apps:
         options = {"projectId": settings.firebase_project_id} if settings.firebase_project_id else None
-        firebase_admin.initialize_app(options=options)
+        firebase_admin.initialize_app(credential=_admin_credential(), options=options)
     try:
-        claims = fb_auth.verify_id_token(token)
-    except Exception:  # invalid, expired, wrong project, revoked...
+        # A few seconds of leeway: a PC clock slightly behind Google's rejects fresh tokens.
+        claims = fb_auth.verify_id_token(token, clock_skew_seconds=10)
+    except Exception as exc:  # invalid, expired, wrong project, revoked...
+        # Log the reason (never the token) so a 401 can be diagnosed from the server log.
+        log.warning("Firebase token rejected: %s: %s", type(exc).__name__, exc)
         raise _UNAUTHORIZED
     return Identity(uid=claims["uid"], email=claims.get("email"), name=claims.get("name"))
 
