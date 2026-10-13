@@ -34,6 +34,14 @@ class Settings(BaseSettings):
     # M6 asset-class guidance stays off in production until counsel signs off (spec §13).
     feature_allocation: bool = True
 
+    # AI onboarding chat (Gemini). Empty key = chat switched off; the forms still work.
+    gemini_api_key: str = ""
+    gemini_model: str = "gemini-3.8-flash"
+    # "ai_studio" (keys from aistudio.google.com), "vertex" (keys from Cloud console Agent Platform /
+    # Vertex AI, billed to Cloud credits) or "auto" (try AI Studio, then Vertex on auth/billing errors).
+    gemini_endpoint: str = "auto"
+    assistant_daily_messages: int = 60  # per user per 24h; bounds cost and abuse
+
     @field_validator("cors_origins", mode="before")
     @classmethod
     def _split_origins(cls, v):

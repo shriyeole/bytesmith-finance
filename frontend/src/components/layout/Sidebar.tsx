@@ -20,6 +20,7 @@ const Svg: React.FC<{ d: string }> = ({ d }) => (
 const BudgetIcon = () => <Svg d="M3 6h18M3 12h12M3 18h7" />;
 const MixIcon = () => <Svg d="M12 3a9 9 0 1 0 9 9h-9z M14 2.5V10h7.5A8 8 0 0 0 14 2.5z" />;
 const HistoryIcon = () => <Svg d="M3 12a9 9 0 1 0 3-6.7L3 8 M3 3v5h5 M12 7v5l3 2" />;
+const ChatIcon = () => <Svg d="M4 5h16v11H9l-5 4z M8 9h8 M8 12h5" />;
 
 const item = ({ isActive }: { isActive: boolean }) => `sidebar__nav-item ${isActive ? 'sidebar__nav-item--active' : ''}`;
 
@@ -38,6 +39,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ onNavigate, className = '' }) 
 
     <nav className="sidebar__nav">
       <NavLink to="/overview" className={item} onClick={onNavigate}><DashboardIcon size={20} /><span>Overview</span></NavLink>
+      <NavLink to="/start" className={item} onClick={onNavigate}><ChatIcon /><span>Setup chat</span></NavLink>
       <NavLink to="/setup/profile" className={({ isActive }) => item({ isActive: isActive || pathname.startsWith('/setup') })} onClick={onNavigate}><ProfileIcon size={20} /><span>My finances</span></NavLink>
       <NavLink to="/goals" className={item} onClick={onNavigate}><GoalIcon size={20} /><span>Goals</span></NavLink>
       <NavLink to="/budget" className={item} onClick={onNavigate}><BudgetIcon /><span>Budget</span></NavLink>

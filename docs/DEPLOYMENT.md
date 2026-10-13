@@ -88,6 +88,26 @@ In GitHub → *Settings → Environments → staging → Variables*, add:
 After that, every green CI run on `main` builds the image, runs `alembic upgrade head` as the
 `finance-migrate` Cloud Run Job, deploys the API, then deploys the frontend.
 
+## 3b. AI setup chat (Gemini) — optional
+
+New users land on a chat (`/start`) that fills in their profile, income, spending, savings,
+loans, insurance, family and goals. It needs a Gemini API key; without one the chat shows a
+notice and the step-by-step forms still work.
+
+1. Create a key at https://aistudio.google.com/apikey (pick project `finance-tracker-a4751`).
+   Use a key on a project with billing enabled: on the free tier Google may use prompts to
+   improve its products, which is not acceptable for users' financial details.
+2. Store it in Secret Manager (Cloud Shell), never in the repo:
+   ```bash
+   printf '%s' 'PASTE-KEY-HERE' | gcloud secrets create gemini-api-key --replication-policy=automatic --data-file=-
+   ```
+   (`finance-api` already has `secretAccessor`.) To rotate: `gcloud secrets versions add gemini-api-key --data-file=-`.
+3. In GitHub → Settings → Secrets and variables → Actions → Variables, add `GEMINI_SECRET` = `gemini-api-key`.
+   The next deploy passes it to Cloud Run as `GEMINI_API_KEY`.
+
+Optional settings: `GEMINI_MODEL` (default `gemini-3.8-flash`), `ASSISTANT_DAILY_MESSAGES` (default 60 per user per day).
+Locally, put `GEMINI_API_KEY=...` in `backend/.env` (git-ignored).
+
 ## 4. Running locally
 
 | Mode | Command |

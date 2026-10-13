@@ -3,6 +3,7 @@
 from fastapi import APIRouter
 
 from app.core.router import router as account_router
+from app.modules.assistant.router import router as assistant_router
 from app.modules.financial_state.router import router as financial_state_router
 from app.modules.planning.router import router as planning_router
 from app.routers.goal import router as goal_router
@@ -12,6 +13,7 @@ api_router = APIRouter()
 api_router.include_router(account_router)
 api_router.include_router(financial_state_router)
 api_router.include_router(planning_router)
+api_router.include_router(assistant_router)
 api_router.include_router(profile_router)
 api_router.include_router(goal_router)
 

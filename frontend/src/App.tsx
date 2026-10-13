@@ -20,6 +20,7 @@ import { OverviewPage } from './pages/OverviewPage';
 import { PlanPage } from './pages/PlanPage';
 import { SafetyPage } from './pages/SafetyPage';
 import { SettingsPage } from './pages/SettingsPage';
+import { StartPage } from './pages/StartPage';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -53,7 +54,8 @@ const RequireAuth: React.FC = () => {
 const Home: React.FC = () => {
   const ob = useOnboarding();
   if (ob.isLoading) return <Loading />;
-  if (ob.data && ob.data.completed_count === 0) return <Navigate to="/setup/profile" replace />;
+  // New users start with the AI setup chat; the forms stay one click away.
+  if (ob.data && ob.data.completed_count === 0) return <Navigate to="/start" replace />;
   return <Navigate to="/overview" replace />;
 };
 
@@ -66,6 +68,7 @@ const App: React.FC = () => (
           <Route element={<RequireAuth />}>
             <Route index element={<Home />} />
             <Route path="overview" element={<OverviewPage />} />
+            <Route path="start" element={<StartPage />} />
             <Route path="setup" element={<Navigate to="/setup/profile" replace />} />
             <Route path="setup/:step" element={<OnboardingPage />} />
             <Route path="goals" element={<GoalsPage />} />
