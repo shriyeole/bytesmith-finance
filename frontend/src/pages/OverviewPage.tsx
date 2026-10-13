@@ -34,7 +34,10 @@ export const OverviewPage: React.FC = () => {
             <p className="callout-box__title">Setup {ob.completed_count} of {ob.total_count} done</p>
             <p className="callout-box__sub">Finish the remaining steps so these numbers reflect your full picture.</p>
           </div>
-          <Link className="btn btn--primary btn--sm" to={`/setup/${ob.next_step === 'liabilities' ? 'loans' : ob.next_step ?? 'profile'}`}>Continue setup</Link>
+          <div className="callout-box__actions">
+            <Link className="btn btn--primary btn--sm" to="/start">{ob.completed_count === 0 ? 'Set up by chatting' : 'Continue in chat'}</Link>
+            <Link className="btn-link" to={`/setup/${ob.next_step === 'liabilities' ? 'loans' : ob.next_step ?? 'profile'}`}>Use forms</Link>
+          </div>
         </div>
       )}
 

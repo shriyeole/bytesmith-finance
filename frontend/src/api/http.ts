@@ -28,6 +28,9 @@ export function setTokenGetter(getter: TokenGetter): void {
 function messageFrom(body: unknown, status: number): string {
   const detail = (body as { detail?: unknown } | null)?.detail;
   if (typeof detail === 'string') return detail;
+  if (detail && typeof detail === 'object' && typeof (detail as { message?: unknown }).message === 'string') {
+    return (detail as { message: string }).message;
+  }
   if (Array.isArray(detail)) {
     return detail
       .map((item: { loc?: (string | number)[]; msg?: string }) => {

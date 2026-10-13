@@ -4130,6 +4130,271 @@
         }
       }
     },
+    "/api/v1/assistant/session": {
+      "get": {
+        "tags": [
+          "Assistant"
+        ],
+        "summary": "Get Session",
+        "operationId": "get_session_api_v1_assistant_session_get",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/assistant/session/messages": {
+      "post": {
+        "tags": [
+          "Assistant"
+        ],
+        "summary": "Send Message",
+        "operationId": "send_message_api_v1_assistant_session_messages_post",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MessageIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/assistant/session/draft": {
+      "put": {
+        "tags": [
+          "Assistant"
+        ],
+        "summary": "Edit Draft",
+        "operationId": "edit_draft_api_v1_assistant_session_draft_put",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Draft"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/assistant/session/reset": {
+      "post": {
+        "tags": [
+          "Assistant"
+        ],
+        "summary": "Reset Session",
+        "operationId": "reset_session_api_v1_assistant_session_reset_post",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/assistant/session/apply": {
+      "post": {
+        "tags": [
+          "Assistant"
+        ],
+        "summary": "Apply Session",
+        "operationId": "apply_session_api_v1_assistant_session_apply_post",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplyResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/profile": {
       "get": {
         "tags": [
@@ -4621,6 +4886,24 @@
         ],
         "title": "AllocationView"
       },
+      "ApplyResult": {
+        "properties": {
+          "onboarding": {
+            "$ref": "#/components/schemas/OnboardingStatus"
+          },
+          "created": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Created"
+          }
+        },
+        "type": "object",
+        "required": [
+          "onboarding",
+          "created"
+        ],
+        "title": "ApplyResult"
+      },
       "AssetCreate": {
         "properties": {
           "name": {
@@ -4685,6 +4968,67 @@
           "current_value_paise"
         ],
         "title": "AssetCreate"
+      },
+      "AssetDraft": {
+        "properties": {
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "asset_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Asset Type"
+          },
+          "value": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Value"
+          },
+          "monthly_investment": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Monthly Investment"
+          },
+          "is_emergency_fund": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Is Emergency Fund"
+          }
+        },
+        "type": "object",
+        "title": "AssetDraft"
       },
       "AssetRead": {
         "properties": {
@@ -5056,6 +5400,24 @@
         ],
         "title": "CareerBreak"
       },
+      "ChatMessage": {
+        "properties": {
+          "role": {
+            "type": "string",
+            "title": "Role"
+          },
+          "text": {
+            "type": "string",
+            "title": "Text"
+          }
+        },
+        "type": "object",
+        "required": [
+          "role",
+          "text"
+        ],
+        "title": "ChatMessage"
+      },
       "ChildEvent": {
         "properties": {
           "in_months": {
@@ -5233,6 +5595,80 @@
           "method"
         ],
         "title": "DebtOverview"
+      },
+      "Draft": {
+        "properties": {
+          "profile": {
+            "$ref": "#/components/schemas/ProfileDraft",
+            "default": {}
+          },
+          "family": {
+            "items": {
+              "$ref": "#/components/schemas/MemberDraft"
+            },
+            "type": "array",
+            "title": "Family",
+            "default": []
+          },
+          "incomes": {
+            "items": {
+              "$ref": "#/components/schemas/IncomeDraft"
+            },
+            "type": "array",
+            "title": "Incomes",
+            "default": []
+          },
+          "expenses": {
+            "items": {
+              "$ref": "#/components/schemas/ExpenseDraft"
+            },
+            "type": "array",
+            "title": "Expenses",
+            "default": []
+          },
+          "assets": {
+            "items": {
+              "$ref": "#/components/schemas/AssetDraft"
+            },
+            "type": "array",
+            "title": "Assets",
+            "default": []
+          },
+          "loans": {
+            "items": {
+              "$ref": "#/components/schemas/LoanDraft"
+            },
+            "type": "array",
+            "title": "Loans",
+            "default": []
+          },
+          "insurance": {
+            "items": {
+              "$ref": "#/components/schemas/PolicyDraft"
+            },
+            "type": "array",
+            "title": "Insurance",
+            "default": []
+          },
+          "goals": {
+            "items": {
+              "$ref": "#/components/schemas/GoalDraft"
+            },
+            "type": "array",
+            "title": "Goals",
+            "default": []
+          },
+          "none_declared": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "None Declared",
+            "default": []
+          }
+        },
+        "type": "object",
+        "title": "Draft"
       },
       "EmergencyFund": {
         "properties": {
@@ -5420,6 +5856,56 @@
           "amount_paise"
         ],
         "title": "ExpenseCreate"
+      },
+      "ExpenseDraft": {
+        "properties": {
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "category": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Category"
+          },
+          "amount": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Amount"
+          },
+          "frequency": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Frequency"
+          }
+        },
+        "type": "object",
+        "title": "ExpenseDraft"
       },
       "ExpenseRead": {
         "properties": {
@@ -5936,6 +6422,78 @@
           "goal_type"
         ],
         "title": "GoalCreate"
+      },
+      "GoalDraft": {
+        "properties": {
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "goal_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Goal Type"
+          },
+          "target_year": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Year"
+          },
+          "cost_today": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cost Today"
+          },
+          "saved": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Saved"
+          },
+          "monthly": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Monthly"
+          }
+        },
+        "type": "object",
+        "title": "GoalDraft"
       },
       "GoalEvaluation": {
         "properties": {
@@ -7403,6 +7961,78 @@
         ],
         "title": "IncomeCreate"
       },
+      "IncomeDraft": {
+        "properties": {
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "kind": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Kind"
+          },
+          "amount": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Amount"
+          },
+          "frequency": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Frequency"
+          },
+          "owner": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Owner"
+          },
+          "yearly_raise_pct": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Yearly Raise Pct"
+          }
+        },
+        "type": "object",
+        "title": "IncomeDraft"
+      },
       "IncomeKind": {
         "type": "string",
         "enum": [
@@ -8136,6 +8766,78 @@
         ],
         "title": "Liquidity"
       },
+      "LoanDraft": {
+        "properties": {
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "loan_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Loan Type"
+          },
+          "outstanding": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Outstanding"
+          },
+          "emi": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Emi"
+          },
+          "interest_rate_pct": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Interest Rate Pct"
+          },
+          "months_left": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Months Left"
+          }
+        },
+        "type": "object",
+        "title": "LoanDraft"
+      },
       "LoanView": {
         "properties": {
           "id": {
@@ -8320,6 +9022,56 @@
         ],
         "title": "MemberCreate"
       },
+      "MemberDraft": {
+        "properties": {
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "relationship": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Relationship"
+          },
+          "age": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Age"
+          },
+          "is_dependent": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Is Dependent"
+          }
+        },
+        "type": "object",
+        "title": "MemberDraft"
+      },
       "MemberRead": {
         "properties": {
           "id": {
@@ -8424,6 +9176,22 @@
         "additionalProperties": false,
         "type": "object",
         "title": "MemberUpdate"
+      },
+      "MessageIn": {
+        "properties": {
+          "text": {
+            "type": "string",
+            "maxLength": 4000,
+            "minLength": 1,
+            "title": "Text"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "text"
+        ],
+        "title": "MessageIn"
       },
       "MetricChange": {
         "properties": {
@@ -8877,6 +9645,67 @@
         ],
         "title": "PolicyCreate"
       },
+      "PolicyDraft": {
+        "properties": {
+          "policy_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Policy Type"
+          },
+          "cover": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cover"
+          },
+          "annual_premium": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Annual Premium"
+          },
+          "source": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source"
+          },
+          "covers": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Covers"
+          }
+        },
+        "type": "object",
+        "title": "PolicyDraft"
+      },
       "PolicyRead": {
         "properties": {
           "id": {
@@ -9153,6 +9982,112 @@
           "aspirational"
         ],
         "title": "Priority"
+      },
+      "ProfileDraft": {
+        "properties": {
+          "full_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Full Name"
+          },
+          "age": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Age"
+          },
+          "date_of_birth": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Date Of Birth"
+          },
+          "city": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "City"
+          },
+          "marital_status": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Marital Status"
+          },
+          "employment_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Employment Type"
+          },
+          "income_stability": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Income Stability"
+          },
+          "retirement_age": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Retirement Age"
+          },
+          "tax_regime": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tax Regime"
+          }
+        },
+        "type": "object",
+        "title": "ProfileDraft"
       },
       "ProfileResponse": {
         "properties": {
@@ -9821,6 +10756,95 @@
           "link"
         ],
         "title": "ScorePart"
+      },
+      "Section": {
+        "properties": {
+          "key": {
+            "type": "string",
+            "title": "Key"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "done": {
+            "type": "boolean",
+            "title": "Done"
+          },
+          "count": {
+            "type": "integer",
+            "title": "Count"
+          },
+          "missing": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Missing"
+          }
+        },
+        "type": "object",
+        "required": [
+          "key",
+          "label",
+          "done",
+          "count",
+          "missing"
+        ],
+        "title": "Section"
+      },
+      "SessionRead": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "messages": {
+            "items": {
+              "$ref": "#/components/schemas/ChatMessage"
+            },
+            "type": "array",
+            "title": "Messages"
+          },
+          "draft": {
+            "$ref": "#/components/schemas/Draft"
+          },
+          "sections": {
+            "items": {
+              "$ref": "#/components/schemas/Section"
+            },
+            "type": "array",
+            "title": "Sections"
+          },
+          "complete": {
+            "type": "boolean",
+            "title": "Complete"
+          },
+          "ai_available": {
+            "type": "boolean",
+            "title": "Ai Available"
+          },
+          "messages_left_today": {
+            "type": "integer",
+            "title": "Messages Left Today"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "status",
+          "messages",
+          "draft",
+          "sections",
+          "complete",
+          "ai_available",
+          "messages_left_today"
+        ],
+        "title": "SessionRead"
       },
       "SimulateRequest": {
         "properties": {

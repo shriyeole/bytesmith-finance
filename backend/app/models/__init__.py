@@ -9,5 +9,6 @@ from app.models.profile import DEFAULT_USER_ID, UserProfile
 from app.models.goal import FinancialGoal
 from app.modules.financial_state import models as _financial_state_models  # noqa: F401
 from app.modules.planning import models as _planning_models  # noqa: F401
+from app.modules.assistant import models as _assistant_models  # noqa: F401
 
 __all__ = ["Base", "DEFAULT_USER_ID", "User", "UserProfile", "FinancialGoal"]

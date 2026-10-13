@@ -8,6 +8,7 @@ request acts as DEV_DEFAULT_USER_ID. Dev mode is refused at startup in staging/p
 """
 
 import logging
+import threading
 from dataclasses import dataclass
 from typing import Optional
 
@@ -19,6 +20,7 @@ from app.core.models import User
 from app.database import get_db
 
 log = logging.getLogger("app.auth")
+_INIT_LOCK = threading.Lock()
 
 
 @dataclass(frozen=True)
@@ -71,9 +73,10 @@ def _verify_firebase(token: str, settings: Settings) -> Identity:
     import firebase_admin
     from firebase_admin import auth as fb_auth
 
-    if not firebase_admin._apps:
-        options = {"projectId": settings.firebase_project_id} if settings.firebase_project_id else None
-        firebase_admin.initialize_app(credential=_admin_credential(), options=options)
+    with _INIT_LOCK:  # concurrent first requests must not both initialise the app
+        if not firebase_admin._apps:
+            options = {"projectId": settings.firebase_project_id} if settings.firebase_project_id else None
+            firebase_admin.initialize_app(credential=_admin_credential(), options=options)
     try:
         # A few seconds of leeway: a PC clock slightly behind Google's rejects fresh tokens.
         claims = fb_auth.verify_id_token(token, clock_skew_seconds=10)

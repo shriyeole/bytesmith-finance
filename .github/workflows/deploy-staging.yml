@@ -3,6 +3,8 @@ name: Deploy to staging
 # Requires the one-time setup in docs/DEPLOYMENT.md. Repository variables used:
 #   GCP_PROJECT_ID, GCP_WIF_PROVIDER, GCP_DEPLOY_SA, CLOUD_SQL_INSTANCE,
 #   FIREBASE_API_KEY, FIREBASE_AUTH_DOMAIN (frontend build)
+#   GEMINI_SECRET (optional): name of the Secret Manager secret holding the Gemini API key;
+#   when set, the AI onboarding chat is switched on.
 on:
   workflow_run:
     workflows: [CI]
@@ -70,7 +72,7 @@ jobs:
             --service-account "finance-api@${{ vars.GCP_PROJECT_ID }}.iam.gserviceaccount.com" \
             --set-cloudsql-instances "${{ vars.CLOUD_SQL_INSTANCE }}" \
             --set-env-vars ENVIRONMENT=staging,AUTH_MODE=firebase,AUTO_CREATE_TABLES=false,FIREBASE_PROJECT_ID=${{ vars.GCP_PROJECT_ID }} \
-            --set-secrets DATABASE_URL=database-url:latest \
+            --set-secrets "DATABASE_URL=database-url:latest${{ vars.GEMINI_SECRET && format(',GEMINI_API_KEY={0}:latest', vars.GEMINI_SECRET) || '' }}" \
             --min-instances 0 --max-instances 3 \
             --allow-unauthenticated
 

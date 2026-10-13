@@ -843,6 +843,91 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/assistant/session": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Session */
+        get: operations["get_session_api_v1_assistant_session_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/assistant/session/messages": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Send Message */
+        post: operations["send_message_api_v1_assistant_session_messages_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/assistant/session/draft": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Edit Draft */
+        put: operations["edit_draft_api_v1_assistant_session_draft_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/assistant/session/reset": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Reset Session */
+        post: operations["reset_session_api_v1_assistant_session_reset_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/assistant/session/apply": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Apply Session */
+        post: operations["apply_session_api_v1_assistant_session_apply_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/profile": {
         parameters: {
             query?: never;
@@ -1020,6 +1105,14 @@ export interface components {
             /** Method */
             method: string[];
         };
+        /** ApplyResult */
+        ApplyResult: {
+            onboarding: components["schemas"]["OnboardingStatus"];
+            /** Created */
+            created: {
+                [key: string]: unknown;
+            };
+        };
         /** AssetCreate */
         AssetCreate: {
             /** Name */
@@ -1042,6 +1135,19 @@ export interface components {
             monthly_contribution_paise: number;
             /** Value As Of */
             value_as_of?: string | null;
+        };
+        /** AssetDraft */
+        AssetDraft: {
+            /** Name */
+            name?: string | null;
+            /** Asset Type */
+            asset_type?: string | null;
+            /** Value */
+            value?: number | null;
+            /** Monthly Investment */
+            monthly_investment?: number | null;
+            /** Is Emergency Fund */
+            is_emergency_fund?: boolean | null;
         };
         /** AssetRead */
         AssetRead: {
@@ -1155,6 +1261,13 @@ export interface components {
             /** Months */
             months: number;
         };
+        /** ChatMessage */
+        ChatMessage: {
+            /** Role */
+            role: string;
+            /** Text */
+            text: string;
+        };
         /** ChildEvent */
         ChildEvent: {
             /**
@@ -1215,6 +1328,51 @@ export interface components {
             /** Method */
             method: string[];
         };
+        /** Draft */
+        Draft: {
+            /** @default {} */
+            profile: components["schemas"]["ProfileDraft"];
+            /**
+             * Family
+             * @default []
+             */
+            family: components["schemas"]["MemberDraft"][];
+            /**
+             * Incomes
+             * @default []
+             */
+            incomes: components["schemas"]["IncomeDraft"][];
+            /**
+             * Expenses
+             * @default []
+             */
+            expenses: components["schemas"]["ExpenseDraft"][];
+            /**
+             * Assets
+             * @default []
+             */
+            assets: components["schemas"]["AssetDraft"][];
+            /**
+             * Loans
+             * @default []
+             */
+            loans: components["schemas"]["LoanDraft"][];
+            /**
+             * Insurance
+             * @default []
+             */
+            insurance: components["schemas"]["PolicyDraft"][];
+            /**
+             * Goals
+             * @default []
+             */
+            goals: components["schemas"]["GoalDraft"][];
+            /**
+             * None Declared
+             * @default []
+             */
+            none_declared: string[];
+        };
         /** EmergencyFund */
         EmergencyFund: {
             /** Status */
@@ -1273,6 +1431,17 @@ export interface components {
             frequency: components["schemas"]["Frequency"];
             /** Inflation Bps */
             inflation_bps?: number | null;
+        };
+        /** ExpenseDraft */
+        ExpenseDraft: {
+            /** Name */
+            name?: string | null;
+            /** Category */
+            category?: string | null;
+            /** Amount */
+            amount?: number | null;
+            /** Frequency */
+            frequency?: string | null;
         };
         /** ExpenseRead */
         ExpenseRead: {
@@ -1427,6 +1596,21 @@ export interface components {
             notes?: string | null;
             /** @default active */
             status: components["schemas"]["GoalStatus"];
+        };
+        /** GoalDraft */
+        GoalDraft: {
+            /** Name */
+            name?: string | null;
+            /** Goal Type */
+            goal_type?: string | null;
+            /** Target Year */
+            target_year?: number | null;
+            /** Cost Today */
+            cost_today?: number | null;
+            /** Saved */
+            saved?: number | null;
+            /** Monthly */
+            monthly?: number | null;
         };
         /** GoalEvaluation */
         GoalEvaluation: {
@@ -1842,6 +2026,21 @@ export interface components {
              */
             is_active: boolean;
         };
+        /** IncomeDraft */
+        IncomeDraft: {
+            /** Name */
+            name?: string | null;
+            /** Kind */
+            kind?: string | null;
+            /** Amount */
+            amount?: number | null;
+            /** Frequency */
+            frequency?: string | null;
+            /** Owner */
+            owner?: string | null;
+            /** Yearly Raise Pct */
+            yearly_raise_pct?: number | null;
+        };
         /**
          * IncomeKind
          * @enum {string}
@@ -2052,6 +2251,21 @@ export interface components {
          * @enum {string}
          */
         Liquidity: "immediate" | "short_term" | "market_linked" | "locked" | "illiquid";
+        /** LoanDraft */
+        LoanDraft: {
+            /** Name */
+            name?: string | null;
+            /** Loan Type */
+            loan_type?: string | null;
+            /** Outstanding */
+            outstanding?: number | null;
+            /** Emi */
+            emi?: number | null;
+            /** Interest Rate Pct */
+            interest_rate_pct?: number | null;
+            /** Months Left */
+            months_left?: number | null;
+        };
         /** LoanView */
         LoanView: {
             /** Id */
@@ -2111,6 +2325,17 @@ export interface components {
              */
             is_dependent: boolean;
         };
+        /** MemberDraft */
+        MemberDraft: {
+            /** Name */
+            name?: string | null;
+            /** Relationship */
+            relationship?: string | null;
+            /** Age */
+            age?: number | null;
+            /** Is Dependent */
+            is_dependent?: boolean | null;
+        };
         /** MemberRead */
         MemberRead: {
             /** Id */
@@ -2143,6 +2368,11 @@ export interface components {
             date_of_birth?: string | null;
             /** Is Dependent */
             is_dependent?: boolean | null;
+        };
+        /** MessageIn */
+        MessageIn: {
+            /** Text */
+            text: string;
         };
         /** MetricChange */
         MetricChange: {
@@ -2284,6 +2514,19 @@ export interface components {
             /** Renewal Date */
             renewal_date?: string | null;
         };
+        /** PolicyDraft */
+        PolicyDraft: {
+            /** Policy Type */
+            policy_type?: string | null;
+            /** Cover */
+            cover?: number | null;
+            /** Annual Premium */
+            annual_premium?: number | null;
+            /** Source */
+            source?: string | null;
+            /** Covers */
+            covers?: string | null;
+        };
         /** PolicyRead */
         PolicyRead: {
             /** Id */
@@ -2378,6 +2621,27 @@ export interface components {
          * @enum {string}
          */
         Priority: "essential" | "important" | "aspirational";
+        /** ProfileDraft */
+        ProfileDraft: {
+            /** Full Name */
+            full_name?: string | null;
+            /** Age */
+            age?: number | null;
+            /** Date Of Birth */
+            date_of_birth?: string | null;
+            /** City */
+            city?: string | null;
+            /** Marital Status */
+            marital_status?: string | null;
+            /** Employment Type */
+            employment_type?: string | null;
+            /** Income Stability */
+            income_stability?: string | null;
+            /** Retirement Age */
+            retirement_age?: number | null;
+            /** Tax Regime */
+            tax_regime?: string | null;
+        };
         /**
          * ProfileResponse
          * @description Response payload for financial profile endpoints.
@@ -2583,6 +2847,37 @@ export interface components {
             tip?: string | null;
             /** Link */
             link: string;
+        };
+        /** Section */
+        Section: {
+            /** Key */
+            key: string;
+            /** Label */
+            label: string;
+            /** Done */
+            done: boolean;
+            /** Count */
+            count: number;
+            /** Missing */
+            missing: string[];
+        };
+        /** SessionRead */
+        SessionRead: {
+            /** Id */
+            id: string;
+            /** Status */
+            status: string;
+            /** Messages */
+            messages: components["schemas"]["ChatMessage"][];
+            draft: components["schemas"]["Draft"];
+            /** Sections */
+            sections: components["schemas"]["Section"][];
+            /** Complete */
+            complete: boolean;
+            /** Ai Available */
+            ai_available: boolean;
+            /** Messages Left Today */
+            messages_left_today: number;
         };
         /** SimulateRequest */
         SimulateRequest: {
@@ -5229,6 +5524,169 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["AlertRead"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_session_api_v1_assistant_session_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SessionRead"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    send_message_api_v1_assistant_session_messages_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MessageIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SessionRead"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    edit_draft_api_v1_assistant_session_draft_put: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Draft"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SessionRead"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reset_session_api_v1_assistant_session_reset_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SessionRead"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    apply_session_api_v1_assistant_session_apply_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApplyResult"];
                 };
             };
             /** @description Validation Error */
